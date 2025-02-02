@@ -1,8 +1,8 @@
 {
-  "name": "training-site",
+  "name": "training-backend",
   "version": "1.0.0",
   "description": "Hello world!",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +13,5 @@
     "express": "^4.21.2",
     "mongodb": "^6.12.0",
     "node.js": "^0.0.1-security",
-    "react": "^19.0.0"
   }
 }
