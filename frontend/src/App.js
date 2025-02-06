@@ -1,5 +1,12 @@
-import { useState } from "react";
+import React from 'react';
+import HomePage from './Home';
 
-export default function frontPage() {
-  return <h1> Hello World! </h1>;
-}
+const App = () => {
+  return (
+    <div>
+      <HomePage />
+    </div>
+  );
+};
+
+export default App;
