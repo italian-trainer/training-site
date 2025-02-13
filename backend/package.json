@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.2",
-    "mongodb": "^6.12.0",
-    "node.js": "^0.0.1-security",
+    "mongodb": "^6.13.0",
+    "node.js": "^0.0.1-security"
   }
 }
