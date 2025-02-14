@@ -1,6 +1,7 @@
 import React from 'react';
 import './Home.css'; 
 import Logo from '../src/mikLogo.png'
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -15,7 +16,9 @@ const HomePage = () => {
       </div>
 
       <br/>
-      <button className="login-button">Login</button>
+      <Link to="/login">
+        <button className="login-button">Login</button>
+      </Link>
     </div>
   );
 };
