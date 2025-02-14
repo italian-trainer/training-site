@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 .env
+||||||| parent of f410a12 (Update README and gitignore)
+=======
+# Housekeeping
+>>>>>>> f410a12 (Update README and gitignore)
 node_modules
 package-lock.json
 **/node_modules
 **/package-lock.json
+
+# # Keep passwords safe
+# .env
+# **/.env

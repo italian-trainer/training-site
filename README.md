@@ -1,16 +1,28 @@
-# Resturant Trainer
-A MERN project which allows for the training of new employees hired at a resturant.
+# Restaurant Trainer
 
-Code is split between a frontend and backend.
+A MERN project which allows for the training of new employees hired at a restaurant.
 
+The project contains a backend and frontend, which must be run in separate.
+
+## Execution of Project
+
+Ensure your current directory is in the project folder.
 To execute the backend:
+
 ```sh
-echo "this is not finished! try again later"
+cd backend
+npm install
+npm run dev
 ```
 
-To execute the frontend, ensure the backend is running, and the frontend is properely configured to communicate with it. 
-Then ensure your working directory is /frontend, and run the following commands:
+To execute the frontend:
+
 ```sh
+cd frontend
 npm install
-npm start
+npm run dev
 ```
+
+## Notes
+
+The code is not secure in its current form. There are a variety of end-user visible error messages which may expose internals and create security risks. This is done for debugging and should be removed in a production environment.
