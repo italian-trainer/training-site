@@ -8,6 +8,7 @@ import App from "./App";
 import HomePage from './Home';
 import Login from "./Login";
 import ManagerDashboard from "./ManagerDashboard";
+import EmployeeDashboard from "./EmployeeDashboard";
 
 const router = createBrowserRouter([
 {
@@ -18,6 +19,8 @@ const router = createBrowserRouter([
     { path: "/", element: <HomePage />},
     { path: "/login", element: <Login />}, 
     { path: "/manager", element: <ManagerDashboard /> },
+    { path: "/employee", element: <EmployeeDashboard /> },
+
   ],
 },
 ]);
