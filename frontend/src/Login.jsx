@@ -18,6 +18,8 @@ const Login = () => {
       <Link to="/">Go Back</Link>
       <br />
       <Link to="/manager">Temp Manager Link</Link>
+      <br />
+      <Link to="/employee">Temp Employee Link</Link>
 
     </div>
   );
