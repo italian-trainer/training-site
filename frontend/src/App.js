@@ -1,17 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import HomePage from './Home';
-import Login from "./Login";
+import { Outlet, Link } from "react-router-dom"; // Outlet renders the child routes
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Router>
+    <div>
+      <main>
+        <Outlet /> 
+      </main>
+    </div>
   );
 };
 
