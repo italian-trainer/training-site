@@ -34,16 +34,17 @@
 ```
 
 ### Output
-* ```json
+
+```json
 {
     "status": "success",
     "message": "Successful login."
 }
 ```
-* SessionID cookie for future logins
+
+& SessionID cookie for future logins and authenticated requests
 
 # Future Plans
 1. Create a database for all verified emails for registration as a manager/employee, currently all new users are managers
- a. this database will serve as the backbone for the roster feature
+    * This database will serve as the backbone for the roster feature
 2. Implement interactive quiz and training functionality and expand user data
-
