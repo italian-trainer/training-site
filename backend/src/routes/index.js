@@ -15,7 +15,7 @@ const Router = (server) => {
       });
     }
   });
-  server.get("/user", verify, (req, res) => {
+  server.get("/dashboard", verify, (req, res) => {
     res.status(200).json({
       status: "success",
       message: "Successful login!",

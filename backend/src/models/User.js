@@ -28,7 +28,6 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
       required: "Please enter a valid role",
-      default: "employee",
     },
   },
   { timestamps: true }
@@ -51,10 +50,10 @@ UserSchema.pre("save", function (next) {
 
 UserSchema.methods.generateAcessJWT = function () {
   let payload = {
-    id: this_id,
+    id: this.id,
   };
   return jwt.sign(payload, server_key, {
-    expiresIn: "7d",
+    expiresIn: "24h",
   });
 };
 

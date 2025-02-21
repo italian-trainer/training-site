@@ -2,6 +2,7 @@ import express from "express";
 import { check } from "express-validator";
 // Gather middleware & controllers
 import { Register } from "../controllers/auth.js";
+import { Login } from "../controllers/auth.js";
 import Validate from "../middleware/validate.js";
 
 const router = express.Router(); // Initalize router
@@ -26,9 +27,26 @@ router.post(
     .notEmpty()
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 characters!"),
-  check("role").notEmpty().withMessage("Role is required!").trim().escape(),
+  check("role")
+    .notEmpty()
+    .withMessage("Role is required!")
+    .trim()
+    .escape()
+    .matches("(manager|employee)"),
   Validate,
   Register
+);
+router.post(
+  "/login",
+  check("email")
+    .isEmail()
+    .withMessage("Email address is invalid")
+    .normalizeEmail(),
+  check("password")
+    .notEmpty()
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters!"),
+  Login
 );
 
 export default router;

@@ -1,7 +1,8 @@
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
 
 export async function Register(req, res) {
-  const { first_name, last_name, email, password, role } = req.query;
+  const { first_name, last_name, email, password } = req.query;
   console.log(req.query);
   try {
     // Check for user existence first
@@ -13,6 +14,7 @@ export async function Register(req, res) {
         message: "This user already has an account!",
       });
     }
+    role = "manager";
     const newUser = new User({
       first_name,
       last_name,
@@ -21,10 +23,8 @@ export async function Register(req, res) {
       role,
     });
     await newUser.save();
-    const { ...user_data } = newUser._doc;
     res.status(200).json({
       status: "success",
-      data: [user_data], // Return user data
       message: "Registration successful",
     });
   } catch (err) {
@@ -60,7 +60,7 @@ export async function Login(req, res) {
         message: "Invalid login. Please try again.",
       });
     let options = {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
       httpOnly: true,
       secure: true,
       sameSite: "None",
@@ -76,7 +76,7 @@ export async function Login(req, res) {
       status: "error",
       code: 500,
       data: [],
-      message: `Error in login: ${error}`,
+      message: `Error in login: ${err}`,
     });
   }
 }
