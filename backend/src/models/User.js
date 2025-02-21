@@ -5,6 +5,10 @@ import { server_key } from "../config/index.js";
 
 const UserSchema = new mongoose.Schema(
   {
+    user_id: {
+      type: String,
+      unique: true,
+    },
     first_name: {
       type: String,
       required: "First name is required",
@@ -15,19 +19,18 @@ const UserSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: "Email is required",
       unique: true,
       lowercase: true,
       trim: true,
     },
-    password: {
-      type: String,
-      required: "Password is required",
-      select: false,
-    },
     role: {
       type: String,
       required: "Please enter a valid role",
+      validate: RegExp("(manager|employee|admin)"),
+    },
+    password: {
+      type: String,
+      select: false,
     },
   },
   { timestamps: true }

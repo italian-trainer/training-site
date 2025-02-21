@@ -1,4 +1,5 @@
 import auth from "./auth.js";
+import roster from "./roster.js";
 import verify from "../middleware/verify.js";
 const Router = (server) => {
   server.get("/", (req, res) => {
@@ -21,6 +22,7 @@ const Router = (server) => {
       message: "Successful login!",
     });
   });
+  server.use("/roster", roster);
   server.use("/auth", auth);
 };
 

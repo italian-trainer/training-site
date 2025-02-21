@@ -6,10 +6,8 @@ export async function Verify(req, res, next) {
   console.log("Verification executed");
   try {
     const loginCookie = req.headers["cookie"];
-    console.log(req.headers);
     if (!loginCookie) return res.sendStatus(401); // If cookie DNE, unauthorzied
-    const cookie = loginCookie.split("=")[1];
-    console.log(cookie);
+    const cookie = loginCookie.split("=")[1].split(";")[0]; // Ignore metadata, grab cookie contents, must be updated if new cookies are added
     // Verify cookie
     jwt.verify(cookie, server_key, async (err, decoded) => {
       if (err) {
@@ -22,7 +20,6 @@ export async function Verify(req, res, next) {
       const user = await User.findById(id);
       const { password, ...user_data } = user._doc; // Don't return password
       req.user = user_data;
-      console.log("User has been verified");
       next();
     });
   } catch (err) {

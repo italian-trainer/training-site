@@ -27,6 +27,11 @@ router.post(
     .notEmpty()
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 characters!"),
+  check("password")
+    .notEmpty()
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters!"),
+  check("user_id").notEmpty().withMessage("Please enter a user ID"),
   Validate,
   Register
 );

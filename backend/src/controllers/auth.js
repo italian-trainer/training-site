@@ -2,27 +2,23 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
 export async function Register(req, res) {
-  const { first_name, last_name, email, password } = req.query;
-  console.log(req.query);
+  const { first_name, last_name, user_id, email, password } = req.query;
   try {
     // Check for user existence first
-    const activeUser = await User.findOne({ email }); // Emails are unique
-    if (activeUser) {
+    const activeUser = await User.findOne({ user_id }); // IDs are unique
+    if (!activeUser) {
       return res.status(400).json({
         status: "failed",
         data: [],
-        message: "This user already has an account!",
+        message: "This user is not in the roster!",
       });
     }
-    role = "manager";
-    const newUser = new User({
-      first_name,
-      last_name,
-      email,
-      password,
-      role,
-    });
-    await newUser.save();
+    // Update user info for potential edits
+    activeUser.first_name = first_name;
+    activeUser.last_name = last_name;
+    activeUser.email = email;
+    activeUser.password = password;
+    await activeUser.save();
     res.status(200).json({
       status: "success",
       message: "Registration successful",
