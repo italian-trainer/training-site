@@ -1,5 +1,39 @@
 # Authentication
 
+## POST /roster/add_user
+
+### Input/POST Parameters
+
+```json
+{
+  "first_name": non-empty string,
+  "last_name": non-empty string,
+  "role": employee/manager
+}
+```
+
+* Valid login cookie expected  
+
+### Output
+
+```json
+{
+    "status": "success",
+    "message": "User added to roster successfully"
+    "data": {
+      "first_name": non-empty string,
+      "last_name": non-empty string,
+      "role": employee,manager,
+      "user_id": long user id to be given to new users to register
+    }
+}
+``` 
+
+### Notes on Implementation
+
+* Managers can only create employees
+* Another role, owner, can create managers, will need to manually add this account to the database
+
 ## POST /auth/register
 
 ### Input/POST Parameters
@@ -7,11 +41,14 @@
 ```json
 {
   "email": valid-email,
+  "user_id": valid-userid
   "first_name": non-empty string,
   "last_name": non-empty string,
   "password": >8 char string (will add more requirements later),
 }
 ```
+
+* The registration function can also be used to update any user data, email, first name, password, etc. The user ID is essentially the most powerful form of authentication
 
 ### Output
 
