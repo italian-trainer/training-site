@@ -27,12 +27,6 @@ router.post(
     .notEmpty()
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 characters!"),
-  check("role")
-    .notEmpty()
-    .withMessage("Role is required!")
-    .trim()
-    .escape()
-    .matches("(manager|employee)"),
   Validate,
   Register
 );
