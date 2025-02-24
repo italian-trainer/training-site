@@ -51,7 +51,7 @@ UserSchema.pre("save", function (next) {
 
 UserSchema.methods.generateAcessJWT = function () {
   let payload = {
-    id: this_id,
+    id: this._id,
   };
   return jwt.sign(payload, server_key, {
     expiresIn: "7d",
