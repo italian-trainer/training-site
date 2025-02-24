@@ -1,6 +1,8 @@
 import auth from "./auth.js";
 import roster from "./roster.js";
 import verify from "../middleware/verify.js";
+import quiz from "./quiz.js"; // Import the quiz router
+
 const Router = (server) => {
   server.get("/", (req, res) => {
     try {
@@ -22,8 +24,10 @@ const Router = (server) => {
       message: "Successful login!",
     });
   });
+
   server.use("/roster", roster);
   server.use("/auth", auth);
+  server.use("/quiz", quiz); // Use the quiz router
 };
 
 export default Router;

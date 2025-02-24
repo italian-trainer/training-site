@@ -5,8 +5,8 @@ import { Register } from "../controllers/auth.js";
 import { Login } from "../controllers/auth.js";
 import Validate from "../middleware/validate.js";
 
-const router = express.Router(); // Initalize router
-// Perfrom serialization, then final validation, then finally send to registration
+const router = express.Router(); // Initialize router
+// Perform serialization, then final validation, then finally send to registration
 router.post(
   "/register",
   check("email")
