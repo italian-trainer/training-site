@@ -1,10 +1,12 @@
 import React from 'react';
-import HomePage from './Home';
+import { Outlet, Link } from "react-router-dom"; // Outlet renders the child routes
 
 const App = () => {
   return (
     <div>
-      <HomePage />
+      <main>
+        <Outlet /> 
+      </main>
     </div>
   );
 };

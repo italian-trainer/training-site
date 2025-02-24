@@ -1,11 +1,12 @@
 import React from 'react';
 import './Home.css'; 
-import Logo from '../src/homeLogo.png'
+import Logo from '../src/mikLogo.png'
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
     <div className="homepage-container">
-      <h1>Maria's Italian Restaurant</h1>
+      <h1>Welcome to Maria's Italian Kitchen Training Course</h1>
       <div className="logo-container">
         <img 
           src={Logo} // Use the imported Logo here
@@ -13,8 +14,11 @@ const HomePage = () => {
           className="logo" 
         />
       </div>
+
       <br/>
-      <button className="login-button">Login</button>
+      <Link to="/login">
+        <button className="login-button">Login</button>
+      </Link>
     </div>
   );
 };
