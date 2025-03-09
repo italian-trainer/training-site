@@ -32,6 +32,13 @@ const UserSchema = new mongoose.Schema(
       type: String,
       select: false,
     },
+    messages: {
+      type: [String],
+    },
+    assigned_trainings: {
+      type: Map,
+      of: String,
+    },
   },
   { timestamps: true }
 );

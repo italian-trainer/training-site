@@ -1,7 +1,7 @@
 import express from "express";
 import { check } from "express-validator";
 // Gather middleware & controllers
-import { addToRoster } from "../controllers/roster.js";
+import { addToRoster, readRoster } from "../controllers/roster.js";
 import Validate from "../middleware/validate.js";
 import Verify from "../middleware/verify.js";
 
@@ -22,10 +22,11 @@ router.post(
     .escape(),
   check("role")
     .notEmpty()
-    .matches("(employee|manager)")
+    .matches("(employee|manager|admin)")
     .withMessage("Role is required"),
   Validate,
   addToRoster
 );
+router.post("/get_all_users", Verify, readRoster);
 
 export default router;
