@@ -51,7 +51,7 @@ const ManagerDashboard = () => {
                   <Link to="/messages">Messages</Link>
                 </li>
                 <li>
-                  <Link to="/logout">Log Out</Link>
+                  <Link to="/login">Log Out</Link>
                 </li>
               </ul>
             </div>
