@@ -108,7 +108,7 @@ export async function assignmentsForTraining(req, res) {
   }
   const { training } = req.body;
   try {
-    const training_obj = await Training.findOne({ title: train });
+    const training_obj = await Training.findOne({ title: training });
     if (training_obj == null) {
       res.status(500).json({
         status: "error",
@@ -118,9 +118,9 @@ export async function assignmentsForTraining(req, res) {
       });
       return;
     }
-    out = [];
+    var out = [];
     for (const i in training_obj.assigned_users) {
-      out.append(training.assigned_users[i].display_name);
+      out.push(training_obj.assigned_users[i].get("display_name"));
     }
     res.status(200).json({
       status: "success",
@@ -132,7 +132,7 @@ export async function assignmentsForTraining(req, res) {
       status: "error",
       code: 500,
       data: [],
-      message: `Error during retrieval of user trainings: ${err}`,
+      message: `Error during retrieval of training assignments: ${err}`,
     });
   }
 }
