@@ -17,6 +17,7 @@ export async function addToRoster(req, res) {
       last_name,
       user_id,
       role,
+      email: user_id,
     });
     await newUser.save();
     res.status(200).json({
@@ -160,6 +161,17 @@ export async function assignTraining(req, res) {
         message: "Assigned user does not exist!",
       });
     }
+    for (var i in assigned_training.assigned_users) {
+      if (assigned_training.assigned_users[i].get("email") == email) {
+        res.status(500).json({
+          status: "error",
+          code: 500,
+          data: [],
+          message: "Already assigned to user!",
+        });
+        return;
+      }
+    }
     assigned_training.assigned_users.push({
       display_name: assigned_user.first_name + " " + assigned_user.last_name,
       email: email,
@@ -167,13 +179,19 @@ export async function assignTraining(req, res) {
     if (assigned_user.assigned_trainings == null) {
       assigned_user.assigned_trainings = {};
     }
-    assigned_user.assigned_trainings[training] = {
+    assigned_user.assigned_trainings.push({
+      training,
       current_page: 0, // Start at page 0
       total_pages: assigned_training.total_pages,
       complete: false,
-    };
+    });
     await assigned_training.save();
     await assigned_user.save();
+    res.status(200).json({
+      status: "success",
+      message: "Successfully assigned training",
+      data: [],
+    });
   } catch (err) {
     res.status(500).json({
       status: "error",
