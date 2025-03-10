@@ -3,11 +3,11 @@ import Training from "../models/Training.js";
 import { v4 as uuidv4 } from "uuid";
 
 export async function addToRoster(req, res) {
-  console.log(req.query);
+  console.log(req.body);
   if (req.user.role == "employee") {
     return res.sendStatus(401); // Employees cannot add to roster
   }
-  const { role, first_name, last_name } = req.query;
+  const { role, first_name, last_name } = req.body;
   if (req.user.role == "manager" && (role == "manager" || role == "admin")) {
     return res.sendStatus(401); // Managers cannot create managers or admins
   }
@@ -67,7 +67,7 @@ export async function getUserTrainings(req, res) {
   if (req.user.role == "employee") {
     return res.sendStatus(401); // Employees cannot read roster
   }
-  const { email } = req.query;
+  const { email } = req.body;
   try {
     const user = await User.findOne({ email });
     if (user == null) {
@@ -98,7 +98,7 @@ export async function assignmentsForTraining(req, res) {
   if (req.user.role == "employee") {
     return res.sendStatus(401); // Employees cannot read roster
   }
-  const { training } = req.query;
+  const { training } = req.body;
   try {
     const training_obj = await Training.findOne({ title: train });
     if (training_obj == null) {
@@ -133,7 +133,7 @@ export async function assignTraining(req, res) {
   if (req.user.role == "employee") {
     return res.sendStatus(401); // Employees cannot read roster
   }
-  const { training, email } = req.query;
+  const { training, email } = req.body;
   try {
     const assigned_training = await Training.findOne({ title: training });
     const assigned_user = await User.findOne({ email });
