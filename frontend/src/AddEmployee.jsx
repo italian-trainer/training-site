@@ -1,26 +1,44 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function AddEmployee() {
-    const [formData, setFormData] = useState({ first_name: "", last_name: "", role: "employee" });
-    const [message, setMessage] = useState("");
+    const [first_name, setFirstName] = useState("");
+    const [last_name, setLastName] = useState("");
+    const [message, setMessage] = useState(""); 
 
-    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Ensure inputs are not empty
+        if (!first_name.trim() || !last_name.trim()) {
+            setMessage("Error: First and last name cannot be empty.");
+            return;
+        }
+
+        const role = "employee";
+
         try {
-            const response = await fetch("http://localhost:5000/api/addToRoster", {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                },
-                credentials: "include",
-                body: JSON.stringify(formData),
+            const response = await fetch("http://localhost:5005/roster/add_user", {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+              },
+              body: JSON.stringify({ first_name, last_name, role })
             });
 
+            console.log(localStorage.getItem("token"));
             const data = await response.json();
-            setMessage(data.message);
+            if (response.ok) {
+                setMessage(`User ${data.data.user_id} added successfully!`);
+                setFirstName("");
+                setLastName("");
+            } else {
+                setMessage(`Error: ${data.message || "Unable to add user"}`);
+            }
         } catch (error) {
             setMessage("Request failed: " + error.message);
         }
@@ -30,11 +48,29 @@ export default function AddEmployee() {
         <div>
             <h2>Manager: Add Employee</h2>
             <form onSubmit={handleSubmit}>
-                <input name="first_name" placeholder="First Name" onChange={handleChange} required />
-                <input name="last_name" placeholder="Last Name" onChange={handleChange} required />
-                <select name="role" onChange={handleChange} value="employee" disabled>
-                    <option value="employee">Employee</option>
-                </select>
+                <div>
+                    <label>First Name:</label>
+                    <input 
+                        type="text" 
+                        placeholder="First Name" 
+                        value={first_name}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required 
+                    />
+                </div>
+                <div>
+                    <label>Last Name:</label>
+                    <input 
+                        type="text" 
+                        placeholder="Last Name" 
+                        value={last_name}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required 
+                    />
+                </div>
+                {/* Role is hardcoded to "employee" */}
+                <p><strong>Role:</strong> Employee</p> 
+
                 <button type="submit">Add Employee</button>
             </form>
             <p>{message}</p>
