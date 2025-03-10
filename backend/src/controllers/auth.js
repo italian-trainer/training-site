@@ -77,3 +77,12 @@ export async function Login(req, res) {
     });
   }
 }
+
+export async function getInfo(req, res) {
+  res.status(200).json({
+    status: "success",
+    code: 200,
+    data: req.user,
+    message: "Retrieved user info!",
+  });
+}

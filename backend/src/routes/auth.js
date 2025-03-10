@@ -1,9 +1,9 @@
 import express from "express";
 import { body } from "express-validator";
 // Gather middleware & controllers
-import { Register } from "../controllers/auth.js";
-import { Login } from "../controllers/auth.js";
+import { Register, Login, getInfo } from "../controllers/auth.js";
 import Validate from "../middleware/validate.js";
+import Verify from "../middleware/verify.js";
 
 const router = express.Router(); // Initialize router
 // Perform serialization, then final validation, then finally send to registration
@@ -47,5 +47,6 @@ router.post(
     .withMessage("Password must be at least 8 characters!"),
   Login
 );
+router.get("/get_info", Verify, getInfo);
 
 export default router;
