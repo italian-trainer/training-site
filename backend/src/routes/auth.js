@@ -30,6 +30,7 @@ router.post(
   body("password")
     .notEmpty()
     .isLength({ min: 8 })
+    .matches("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")
     .withMessage("Password must be at least 8 characters!"),
   body("user_id").notEmpty().withMessage("Please enter a user ID"),
   Validate,

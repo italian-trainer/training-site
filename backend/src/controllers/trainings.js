@@ -58,6 +58,38 @@ export async function addTraining(req, res) {
   }
 }
 
+export async function deleteTraining(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot delete trainings
+  }
+  const { training } = req.body;
+  try {
+    var status = await Training.findOneAndDelete({ title: training });
+    if (status == null) {
+      res.status(500).json({
+        status: "error",
+        code: 500,
+        data: [],
+        message: "Training not found!",
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        code: 200,
+        data: [],
+        message: "Successfully deleted training!",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      data: [],
+      message: "Error deleting training!",
+    });
+  }
+}
+
 export async function getPage(req, res) {
   const { training, page } = req.body;
   try {

@@ -8,6 +8,7 @@ import {
   getPage,
   submitQuiz,
   listTrainings,
+  deleteTraining,
 } from "../controllers/trainings.js";
 import Verify from "../middleware/verify.js";
 
@@ -33,6 +34,16 @@ router.post(
   body("quiz").exists().notEmpty().withMessage("Final quiz is required!"),
   Validate,
   addTraining
+);
+router.post(
+  "/delete_training",
+  Verify,
+  body("training")
+    .exists()
+    .notEmpty()
+    .withMessage("A training name is required!"),
+  Validate,
+  deleteTraining
 );
 router.post(
   "/get_page",

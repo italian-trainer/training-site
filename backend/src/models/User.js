@@ -32,6 +32,7 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       select: false,
+      validate: RegExp("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"),
     },
     messages: {
       type: [Map],
