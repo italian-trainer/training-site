@@ -61,3 +61,69 @@ export async function readRoster(req, res) {
     });
   }
 }
+
+export async function getUserTrainings(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot read roster
+  }
+  const { email } = req.query;
+  try {
+    const user = await User.findOne({ email });
+    if (user == null) {
+      res.status(500).json({
+        status: "error",
+        code: 500,
+        data: [],
+        message: "Could not find user!",
+      });
+      return;
+    }
+    res.status(200).json({
+      status: "success",
+      message: "User training successfully retrieved",
+      data: [user.assigned_trainings],
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      data: [],
+      message: `Error during retrieval of user trainings: ${err}`,
+    });
+  }
+}
+
+export async function assignmentsForTraining(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot read roster
+  }
+  const { training } = req.query;
+  try {
+    const training_obj = await Training.findOne({ title: train });
+    if (training_obj == null) {
+      res.status(500).json({
+        status: "error",
+        code: 500,
+        data: [],
+        message: "Could not find user!",
+      });
+      return;
+    }
+    out = [];
+    for (const i in training_obj.assigned_users) {
+      out.append(training.assigned_users[i].display_name);
+    }
+    res.status(200).json({
+      status: "success",
+      message: "Users assigned to training successfully retrieved",
+      data: [out],
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      data: [],
+      message: `Error during retrieval of user trainings: ${err}`,
+    });
+  }
+}

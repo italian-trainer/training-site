@@ -1,7 +1,11 @@
 import express from "express";
 import { check } from "express-validator";
 // Gather middleware & controllers
-import { addToRoster, readRoster } from "../controllers/roster.js";
+import {
+  addToRoster,
+  readRoster,
+  getUserTrainings,
+} from "../controllers/roster.js";
 import Validate from "../middleware/validate.js";
 import Verify from "../middleware/verify.js";
 
@@ -28,5 +32,14 @@ router.post(
   addToRoster
 );
 router.post("/get_all_users", Verify, readRoster);
+router.post(
+  "/get_user_trainings",
+  Verify,
+  check("email")
+    .isEmail()
+    .withMessage("Email address is invalid")
+    .normalizeEmail(),
+  getUserTrainings
+);
 
 export default router;

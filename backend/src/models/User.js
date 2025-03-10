@@ -33,12 +33,23 @@ const UserSchema = new mongoose.Schema(
       select: false,
     },
     messages: {
+      type: [Map],
+    },
+    // {
+    // from: user_data {
+    //  email
+    //  role }
+    // subject: dsjdasjdasdjs
+    // contents: ddjdjdjdjd
+    // }
+    assigned_trainings: {
       type: [String],
     },
-    assigned_trainings: {
-      type: Map,
-      of: String,
-    },
+    // {
+    // training_name: dhjdshjshjds,
+    // current_page: 0,
+    // total_pages: 100
+    // }
   },
   { timestamps: true }
 );
