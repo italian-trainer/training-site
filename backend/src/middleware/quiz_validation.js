@@ -1,7 +1,8 @@
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
 
 export const validateQuiz = [
   body("title") //validate title
+    .exists()
     .notEmpty()
     .withMessage("Title is required!")
     .isString()

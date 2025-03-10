@@ -1,10 +1,11 @@
 import express from "express";
-import { check } from "express-validator";
+import { body } from "express-validator";
 // Gather middleware & controllers
 import {
   addToRoster,
   readRoster,
   getUserTrainings,
+  assignTraining,
 } from "../controllers/roster.js";
 import Validate from "../middleware/validate.js";
 import Verify from "../middleware/verify.js";
@@ -14,17 +15,17 @@ const router = express.Router(); // Initalize router
 router.post(
   "/add_user",
   Verify,
-  check("first_name")
+  body("first_name")
     .notEmpty()
     .withMessage("First name is required!")
     .trim()
     .escape(),
-  check("last_name")
+  body("last_name")
     .notEmpty()
     .withMessage("Last name is required!")
     .trim()
     .escape(),
-  check("role")
+  body("role")
     .notEmpty()
     .matches("(employee|manager|admin)")
     .withMessage("Role is required"),
@@ -35,11 +36,21 @@ router.post("/get_all_users", Verify, readRoster);
 router.post(
   "/get_user_trainings",
   Verify,
-  check("email")
+  body("email")
     .isEmail()
-    .withMessage("Email address is invalid")
+    .withMessage("Email address is invalid!")
     .normalizeEmail(),
   getUserTrainings
+);
+router.post(
+  "/assign_training",
+  Verify,
+  body("email")
+    .isEmail()
+    .withMessage("Email address is invalid!")
+    .normalizeEmail(),
+  body("training").notEmpty().withMessage("A training is required!"),
+  assignTraining
 );
 
 export default router;

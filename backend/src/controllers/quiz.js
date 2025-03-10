@@ -83,6 +83,9 @@ export async function addQuestions(req, res) {
 }
 //Delete quiz
 export async function deleteQuiz(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot read roster
+  }
   const id = req.params.quizID;
   try {
     const deletedQuiz = await Quiz.findByIdAndDelete(id);
@@ -155,6 +158,9 @@ export async function deleteQuestions(req, res) {
 //Drafted
 //answer API route
 export async function getResult(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot read roster
+  }
   try {
     const results = await Result.find();
     res.status(200).json({
@@ -199,6 +205,9 @@ export async function insertResult(req, res) {
 }
 
 export async function deleteResult(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot delete results
+  }
   const { id } = req.params;
   try {
     const deletedResult = await Result.findByIdAndDelete(id);

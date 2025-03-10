@@ -27,7 +27,7 @@
       "user_id": long user id to be given to new users to register
     }
 }
-``` 
+```
 
 ### Notes on Implementation
 

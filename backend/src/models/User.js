@@ -43,7 +43,7 @@ const UserSchema = new mongoose.Schema(
     // contents: ddjdjdjdjd
     // }
     assigned_trainings: {
-      type: [String],
+      type: Map,
     },
     // {
     // training_name: dhjdshjshjds,
