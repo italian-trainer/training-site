@@ -3,6 +3,16 @@ import Result from "../models/Result.js";
 //import questions, { answers } from "../data/quiz-data.js";
 
 //Question API route
+export async function listQuizzes(req, res) {
+  const quizzes = await Quiz.find();
+  res.status(200).json({
+    status: "success",
+    code: 200,
+    data: quizzes,
+    message: "Quiz retrieved successfully",
+  });
+}
+
 export async function getQuiz(req, res) {
   try {
     const { quizID } = req.params;

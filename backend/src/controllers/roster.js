@@ -3,7 +3,6 @@ import Training from "../models/Training.js";
 import { v4 as uuidv4 } from "uuid";
 
 export async function addToRoster(req, res) {
-  console.log(req.body);
   if (req.user.role == "employee") {
     return res.sendStatus(401); // Employees cannot add to roster
   }
@@ -13,7 +12,6 @@ export async function addToRoster(req, res) {
   }
   try {
     const user_id = uuidv4(); // Generate random UUID for user
-    console.log(user_id);
     const newUser = new User({
       first_name,
       last_name,
@@ -24,7 +22,7 @@ export async function addToRoster(req, res) {
     res.status(200).json({
       status: "success",
       message: "User added to roster successfully",
-      data: [newUser._doc],
+      data: newUser._doc,
     });
   } catch (err) {
     res.status(500).json({
@@ -42,6 +40,15 @@ export async function readRoster(req, res) {
   }
   try {
     const users = await User.find();
+    if (users == null) {
+      res.status(200).json({
+        status: "success",
+        code: 200,
+        data: {},
+        message: "No users!",
+      });
+      return;
+    }
     var out = {};
     console.log(users);
     for (const i in users) {
@@ -51,7 +58,7 @@ export async function readRoster(req, res) {
     res.status(200).json({
       status: "success",
       message: "Users successfully retrieved",
-      data: [out],
+      data: out,
     });
   } catch (err) {
     res.status(500).json({
@@ -82,7 +89,7 @@ export async function getUserTrainings(req, res) {
     res.status(200).json({
       status: "success",
       message: "User training successfully retrieved",
-      data: [user.assigned_trainings],
+      data: user.assigned_trainings,
     });
   } catch (err) {
     res.status(500).json({
@@ -117,7 +124,7 @@ export async function assignmentsForTraining(req, res) {
     res.status(200).json({
       status: "success",
       message: "Users assigned to training successfully retrieved",
-      data: [out],
+      data: out,
     });
   } catch (err) {
     res.status(500).json({
@@ -153,11 +160,14 @@ export async function assignTraining(req, res) {
         message: "Assigned user does not exist!",
       });
     }
-    assigned_training.assigned_users.append({
+    assigned_training.assigned_users.push({
       display_name: assigned_user.first_name + " " + assigned_user.last_name,
       email: email,
     });
-    assigned_user.assigned_trainings[training_name] = {
+    if (assigned_user.assigned_trainings == null) {
+      assigned_user.assigned_trainings = {};
+    }
+    assigned_user.assigned_trainings[training] = {
       current_page: 0, // Start at page 0
       total_pages: assigned_training.total_pages,
       complete: false,

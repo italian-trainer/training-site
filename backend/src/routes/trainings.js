@@ -6,21 +6,18 @@ import {
   addTraining,
   getPage,
   submitQuiz,
+  listTrainings,
 } from "../controllers/trainings.js";
 import Verify from "../middleware/verify.js";
 
 const router = express.Router(); // Initalize router
 // Perfrom serialization, then final validation, then finally send to registration
+router.get("/list_trainings", Verify, listTrainings);
 router.get("/get_trainings", Verify, getTrainings);
 router.post(
   "/create_training",
   Verify,
-  body("title")
-    .exists()
-    .notEmpty()
-    .isEmail()
-    .withMessage("Training needs a title!")
-    .normalizeEmail(),
+  body("title").exists().notEmpty().withMessage("Training needs a title!"),
   body("description")
     .exists()
     .notEmpty()

@@ -66,6 +66,7 @@ export async function Login(req, res) {
     res.status(200).json({
       status: "success",
       message: "Successful login.",
+      body: { SessionID: { token, options } },
     });
   } catch (err) {
     res.status(500).json({

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const TrainingSchema = new mongoose.Schema({
   title: { type: String, unique: true, require: true },
   description: { type: String, require: true },
-  pages: { type: String, require: true },
+  pages: { type: [String], require: true },
   total_pages: { type: Number, require: true },
   assigned_users: { type: [Map], require: true },
   quiz: { type: String, require: true },

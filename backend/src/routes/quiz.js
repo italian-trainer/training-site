@@ -6,6 +6,7 @@ import { validateQuiz } from "../middleware/quiz_validation.js";
 const router = express.Router();
 
 //Question api end point
+router.get("/list_quizzes", controller.listQuizzes);
 router
   .route("/:quizID/")
   .get(controller.getQuiz)

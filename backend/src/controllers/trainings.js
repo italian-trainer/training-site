@@ -2,17 +2,30 @@ import Training from "../models/Training.js";
 import Quiz from "../models/Quiz.js";
 import User from "../models/User.js";
 
+export async function listTrainings(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot read trainings
+  }
+  const trainings = await Training.find();
+  res.status(200).json({
+    status: "success",
+    code: 200,
+    data: trainings,
+    message: "Trainings retrieved from database!",
+  });
+}
+
 export async function getTrainings(req, res) {
   res.status(200).json({
     status: "success",
     message: "Users assigned to training successfully retrieved",
-    data: [req.user.assigned_trainings],
+    data: req.user.assigned_trainings,
   });
 }
 export async function addTraining(req, res) {
   const { title, description, pages, quiz } = req.body;
   try {
-    if ((await Quiz.findOne(quiz)) == null) {
+    if ((await Quiz.findOne({ title: quiz })) == null) {
       res.status(500).json({
         status: "error",
         code: 500,
@@ -33,7 +46,7 @@ export async function addTraining(req, res) {
     res.status(200).json({
       status: "success",
       message: "Training added successfully",
-      data: [newTraining._doc],
+      data: newTraining._doc,
     });
   } catch (err) {
     res.status(500).json({
@@ -72,7 +85,7 @@ export async function getPage(req, res) {
     res.status(200).json({
       status: "success",
       message: "Training added successfully",
-      data: [out],
+      data: out,
     });
   } catch (err) {
     res.status(500).json({
@@ -124,7 +137,7 @@ export async function submitQuiz(req, res) {
       res.status(200).json({
         status: "success",
         message: "Failed quiz!",
-        data: [out],
+        data: out,
       });
     }
   } catch (err) {
