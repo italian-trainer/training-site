@@ -83,7 +83,7 @@ export async function getPage(req, res) {
             training: training_data.get("training"),
             current_page: page,
             total_pages: training_data.get("total_pages"),
-            complete: training_data.get("total_pages"),
+            complete: training_data.get("complete"),
           });
           break;
         }
@@ -120,13 +120,31 @@ export async function getPage(req, res) {
 export async function submitQuiz(req, res) {
   const { training, quiz, filled_form } = req.body;
   try {
-    const target_quiz = Quiz.findOne({ title: quiz });
+    const target_quiz = await Quiz.findOne({ title: quiz });
     if (target_quiz == null) {
       res.status(500).json({
         status: "error",
         code: 500,
         data: [],
         message: "Quiz does not exist!",
+      });
+      return;
+    }
+    const target_training = await Training.findOne({ title: training });
+    if (target_training == null) {
+      res.status(500).json({
+        status: "error",
+        code: 500,
+        data: [],
+        message: "Training does not exist!",
+      });
+      return;
+    } else if (target_training.get("quiz") != quiz) {
+      res.status(500).json({
+        status: "error",
+        code: 500,
+        data: [],
+        message: "Quiz does not match with training!",
       });
       return;
     }
@@ -137,12 +155,9 @@ export async function submitQuiz(req, res) {
       }
     }
     if (incorrect_questions.length == 0) {
-      const current_user = User.findById(req.user._id);
+      const current_user = await User.findById(req.user._id);
       for (var i in current_user.assigned_trainings) {
-        if (
-          current_user.assigned_trainings[i].title == training &&
-          current_user.assigned_trainings[i].quiz == quiz
-        ) {
+        if (current_user.assigned_trainings[i].get("training") == training) {
           var training_data = current_user.assigned_trainings[i];
           current_user.assigned_trainings.splice(i, 1);
           current_user.assigned_trainings.push({
@@ -169,7 +184,7 @@ export async function submitQuiz(req, res) {
       res.status(200).json({
         status: "success",
         message: "Failed quiz!",
-        data: out,
+        data: incorrect_questions,
       });
     }
   } catch (err) {
