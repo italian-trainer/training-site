@@ -13,7 +13,10 @@ import router from "./routes/index.js";
 // Initalize Server
 const server = express();
 
-server.use(cors());
+server.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
 server.disable("x-powered-by");
 server.use(cookieParser());
 server.use(express.urlencoded({ extended: false }));
