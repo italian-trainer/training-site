@@ -80,6 +80,8 @@ const Login = () => {
       <Link to="/manager">Temp Manager Link</Link>
       <br />
       <Link to="/employee">Temp Employee Link</Link>
+      <br />
+      <Link to="/register">Register</Link>
 
     </div>
   );

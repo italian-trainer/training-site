@@ -10,6 +10,7 @@ import Login from "./Login";
 import ManagerDashboard from "./ManagerDashboard";
 import EmployeeDashboard from "./EmployeeDashboard";
 import AddEmployee from "./AddEmployee";
+import Register from "./Register";
 
 //employee training modules
 import TrainingLayout from "./pages/training/TrainingLayout";
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
     { path: "/manager", element: <ManagerDashboard /> },
     { path: "/employee", element: <EmployeeDashboard /> },
     { path: "/addEmployee", element: <AddEmployee /> },
+    { path: "/register", element: <Register /> },
     
     // Training Routes
     { path: "/training/:role", element: <TrainingLayout /> },
