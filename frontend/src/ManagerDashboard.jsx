@@ -90,7 +90,9 @@ const ManagerDashboard = () => {
 
         {/* ACTION BUTTONS */}
         <div className="actions">
-          <button className="add-employee-btn">+ Add Employee</button>
+          <Link to="/addEmployee">
+            <button className="addEmployee">+ Add Employee</button>
+          </Link>
           <button className="create-training-btn">+ Create Training</button>
         </div>
       </main>
