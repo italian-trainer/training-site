@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Training from "../models/Training.js";
 import { v4 as uuidv4 } from "uuid";
 
 export async function addToRoster(req, res) {
@@ -124,6 +125,51 @@ export async function assignmentsForTraining(req, res) {
       code: 500,
       data: [],
       message: `Error during retrieval of user trainings: ${err}`,
+    });
+  }
+}
+
+export async function assignTraining(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot read roster
+  }
+  const { training, email } = req.query;
+  try {
+    const assigned_training = await Training.findOne({ title: training });
+    const assigned_user = await User.findOne({ email });
+    if (assigned_training == null) {
+      res.status(500).json({
+        status: "error",
+        code: 500,
+        data: [],
+        message: "Assigned training does not exist!",
+      });
+    }
+    if (assigned_user == null) {
+      res.status(500).json({
+        status: "error",
+        code: 500,
+        data: [],
+        message: "Assigned user does not exist!",
+      });
+    }
+    assigned_training.assigned_users.append({
+      display_name: assigned_user.first_name + " " + assigned_user.last_name,
+      email: email,
+    });
+    assigned_user.assigned_trainings[training_name] = {
+      current_page: 0, // Start at page 0
+      total_pages: assigned_training.total_pages,
+      complete: false,
+    };
+    await assigned_training.save();
+    await assigned_user.save();
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      data: [],
+      message: `Error during training assignment: ${err}`,
     });
   }
 }

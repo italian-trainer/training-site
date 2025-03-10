@@ -29,7 +29,7 @@ const Router = (server) => {
   server.use("/roster", roster);
   server.use("/auth", auth);
   server.use("/quiz", quiz); // Use the quiz router
-  server.use("/trainings", quiz); // Use the quiz router
+  server.use("/trainings", trainings); // Use the quiz router
 };
 
 export default Router;

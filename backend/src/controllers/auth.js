@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
 export async function Register(req, res) {
-  const { first_name, last_name, user_id, email, password } = req.query;
+  const { first_name, last_name, user_id, email, password } = req.body;
   try {
     // Check for user existence first
     const activeUser = await User.findOne({ user_id }); // IDs are unique
@@ -34,7 +34,7 @@ export async function Register(req, res) {
 }
 
 export async function Login(req, res) {
-  const { email } = req.query;
+  const { email } = req.body;
   try {
     const user = await User.findOne({ email }).select("+password");
     if (!user)
@@ -46,7 +46,7 @@ export async function Login(req, res) {
 
     // Check password
     const passwordCorrect = await bcrypt.compare(
-      `${req.query.password}`,
+      `${req.body.password}`,
       user.password
     );
     if (!passwordCorrect)

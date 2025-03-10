@@ -1,5 +1,5 @@
 import express from "express";
-import { check } from "express-validator";
+import { body } from "express-validator";
 // Gather middleware & controllers
 import { Register } from "../controllers/auth.js";
 import { Login } from "../controllers/auth.js";
@@ -9,39 +9,39 @@ const router = express.Router(); // Initialize router
 // Perform serialization, then final validation, then finally send to registration
 router.post(
   "/register",
-  check("email")
+  body("email")
     .isEmail()
     .withMessage("Email address is invalid")
     .normalizeEmail(),
-  check("first_name")
+  body("first_name")
     .notEmpty()
     .withMessage("First name is required!")
     .trim()
     .escape(),
-  check("last_name")
+  body("last_name")
     .notEmpty()
     .withMessage("Last name is required!")
     .trim()
     .escape(),
-  check("password")
+  body("password")
     .notEmpty()
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 characters!"),
-  check("password")
+  body("password")
     .notEmpty()
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 characters!"),
-  check("user_id").notEmpty().withMessage("Please enter a user ID"),
+  body("user_id").notEmpty().withMessage("Please enter a user ID"),
   Validate,
   Register
 );
 router.post(
   "/login",
-  check("email")
+  body("email")
     .isEmail()
     .withMessage("Email address is invalid")
     .normalizeEmail(),
-  check("password")
+  body("password")
     .notEmpty()
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 characters!"),

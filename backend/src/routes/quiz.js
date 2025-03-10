@@ -7,23 +7,23 @@ const router = express.Router();
 
 //Question api end point
 router
-  .route("/:quizID/", Verify)
+  .route("/:quizID/")
   .get(controller.getQuiz)
-  .delete(controller.deleteQuiz);
+  .delete(Verify, controller.deleteQuiz);
 
-router.post("/add-quiz", Verify, validateQuiz, controller.insertQuiz); //add a new quiz
+router.post("/add_quiz", Verify, validateQuiz, controller.insertQuiz); //add a new quiz
 
 //Add questions to a quiz
 router.post("/:quizID/add-questions", Verify, controller.addQuestions);
 router.delete(
   "/:quizID/:questionID/delete-question",
+  Verify,
   controller.deleteQuestions
 );
 //API result
 router
-  .route("/result", Verify)
-  .get(controller.getResult)
-  .post(controller.insertResult)
-  .delete(controller.deleteResult);
+  .route("/result")
+  .get(Verify, controller.getResult)
+  .delete(Verify, controller.deleteResult);
 
 export default router;
