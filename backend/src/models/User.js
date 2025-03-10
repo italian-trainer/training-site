@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
+      required: false,
     },
     role: {
       type: String,
@@ -43,7 +44,7 @@ const UserSchema = new mongoose.Schema(
     // contents: ddjdjdjdjd
     // }
     assigned_trainings: {
-      type: Map,
+      type: [Map],
     },
     // {
     // training_name: dhjdshjshjds,

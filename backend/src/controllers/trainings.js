@@ -18,7 +18,7 @@ export async function listTrainings(req, res) {
 export async function getTrainings(req, res) {
   res.status(200).json({
     status: "success",
-    message: "Users assigned to training successfully retrieved",
+    message: "Successfully retrieved assigned trainings!",
     data: req.user.assigned_trainings,
   });
 }
@@ -71,21 +71,27 @@ export async function getPage(req, res) {
       });
       return;
     }
+    console.log(current_training);
     var out = {};
     const current_user = User.findById(req.user._id);
-    if (page <= current_training.total_pages) {
-      current_user.assigned_trainings[training].current_page = page;
+    if (page >= 0 && page <= current_training.total_pages) {
+      current_user.assigned_trainings.current_page.find(item => item.training == training) = page;
       if (page == current_training.total_pages) {
         out = { type: "quiz", body: current_training.quiz };
       } else {
         out = { type: "html", body: current_training.pages[page] };
       }
+      res.status(200).json({
+        status: "success",
+        message: "Page retrieved successfully",
+        data: out,
+      });
     }
-
-    res.status(200).json({
-      status: "success",
-      message: "Training added successfully",
-      data: out,
+ res.status(500).json({
+      status: "error",
+      code: 500,
+      data: [],
+      message: "Page is out of bounds!",
     });
   } catch (err) {
     res.status(500).json({
@@ -145,7 +151,7 @@ export async function submitQuiz(req, res) {
       status: "error",
       code: 500,
       data: [],
-      message: `Error during training addition: ${err}`,
+      message: `Error during quiz submission: ${err}`,
     });
   }
 }

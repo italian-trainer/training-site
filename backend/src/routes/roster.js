@@ -6,6 +6,7 @@ import {
   readRoster,
   getUserTrainings,
   assignTraining,
+  assignmentsForTraining,
 } from "../controllers/roster.js";
 import Validate from "../middleware/validate.js";
 import Verify from "../middleware/verify.js";
@@ -40,6 +41,7 @@ router.post(
     .isEmail()
     .withMessage("Email address is invalid!")
     .normalizeEmail(),
+  Validate,
   getUserTrainings
 );
 router.post(
@@ -50,7 +52,15 @@ router.post(
     .withMessage("Email address is invalid!")
     .normalizeEmail(),
   body("training").notEmpty().withMessage("A training is required!"),
+  Validate,
   assignTraining
+);
+router.post(
+  "/training_assignments",
+  Verify,
+  body("training").notEmpty().withMessage("A training is required!"),
+  Validate,
+  assignmentsForTraining
 );
 
 export default router;

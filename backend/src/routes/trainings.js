@@ -1,5 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
+import Validate from "../middleware/validate.js";
 // Gather middleware & controllers
 import {
   getTrainings,
@@ -30,13 +31,19 @@ router.post(
     .isArray()
     .withMessage("Pages are required!"),
   body("quiz").exists().notEmpty().withMessage("Final quiz is required!"),
+  Validate,
   addTraining
 );
 router.post(
   "/get_page",
   Verify,
   body("training").exists().notEmpty().withMessage("A training is required!"),
-  body("page").exists().notEmpty().isDecimal(),
+  body("page")
+    .exists()
+    .notEmpty()
+    .isDecimal()
+    .withMessage("Page number is required!"),
+  Validate,
   getPage
 );
 router.post(
@@ -49,6 +56,7 @@ router.post(
     .notEmpty()
     .isArray()
     .withMessage("Form must be an array of answers!"),
+  Validate,
   submitQuiz
 );
 
