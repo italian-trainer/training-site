@@ -3,6 +3,7 @@ import roster from "./roster.js";
 import verify from "../middleware/verify.js";
 import quiz from "./quiz.js"; // Import the quiz router
 import trainings from "./trainings.js";
+import messages from "./message.js";
 
 const Router = (server) => {
   server.get("/", (req, res) => {
@@ -29,7 +30,8 @@ const Router = (server) => {
   server.use("/roster", roster);
   server.use("/auth", auth);
   server.use("/quiz", quiz); // Use the quiz router
-  server.use("/trainings", quiz); // Use the quiz router
+  //server.use("/trainings", quiz); // Use the quiz router
+  server.use("/messages", messages);
 };
 
 export default Router;
