@@ -15,6 +15,7 @@ import Profile from "./Profile";
 import CreateTraining from "./CreateTraining";
 import CreateQuiz from "./CreateQuiz";
 import Messages from "./Messages";
+import SendMessage from "./SendMessage";
 
 //employee training modules
 import TrainingLayout from "./pages/training/TrainingLayout";
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
       { path: "/createTraining", element: <CreateTraining /> },
       { path: "/createQuiz", element: <CreateQuiz /> },
       { path: "/messages", element: <Messages /> },
+      { path: "/sendMessage", element: <SendMessage /> },
 
       // Training Routes
       { path: "/training/:role", element: <TrainingLayout /> },
