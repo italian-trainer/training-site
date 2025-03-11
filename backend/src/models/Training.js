@@ -1,11 +1,16 @@
 import mongoose from "mongoose";
 
+const AssignmentSchema = new mongoose.Schema({
+  display_name: { type: String, unique: false, require: true },
+  email: { type: String, unique: true, require: true },
+});
+
 const TrainingSchema = new mongoose.Schema({
   title: { type: String, unique: true, require: true },
   description: { type: String, require: true },
   pages: { type: [String], require: true },
   total_pages: { type: Number, require: true },
-  assigned_users: { type: [Map], require: true, unique: false },
+  assigned_users: { type: [AssignmentSchema], require: true, unique: false },
   quiz: { type: String, require: true },
   // {
   // display_name: "dsdsdsd",

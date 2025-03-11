@@ -204,3 +204,50 @@ export async function assignTraining(req, res) {
     });
   }
 }
+
+export async function deassignTraining(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot read roster
+  }
+  const { training, email } = req.body;
+  try {
+    const updatedTraining = await Training.findOneAndUpdate(
+      { title: training, "assigned_users.email": email },
+      {
+        $pull: {
+          assigned_users: { email },
+        },
+      },
+      { new: true }
+    );
+    const updatedUser = await User.findOneAndUpdate(
+      { email: email, "assigned_trainings.training": training },
+      {
+        $pull: {
+          assigned_trainings: { training },
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedUser || !updatedTraining) {
+      return res.status(500).json({
+        status: "error",
+        code: 500,
+        message: "Error in training deassignment...",
+      });
+    }
+    return res.status(200).json({
+      status: "success",
+      message: "Successfully deassigned training",
+      data: [],
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      data: [],
+      message: `Error during training deassignment: ${err}`,
+    });
+  }
+}
