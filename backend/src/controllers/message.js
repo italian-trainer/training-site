@@ -88,13 +88,18 @@ export async function getSingleMessage(req, res) {
       return res.sendStatus(401); // Can only access your own messages
     }
 
-    res.json({
-      sender: message.sender,
-      receiver: message.receiver,
-      subject: message.subject,
-      content: message.content,
-      read: message.read,
-      timestamp: message.timestamp,
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      data: {
+        sender: message.sender,
+        receiver: message.receiver,
+        subject: message.subject,
+        content: message.content,
+        read: message.read,
+        timestamp: message.timestamp,
+      },
+      message: "Message retrieved!",
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
