@@ -3,13 +3,13 @@ import Message from "../models/Message.js";
 export async function sendMessage(req, res) {
   try {
     //who sends it and who receives it in the body of the request
-    const { receiver, subject, content, type } = req.body;
+    const { receiver, subject, content } = req.body;
     const message = new Message({
       sender: req.user._id,
       receiver,
       subject,
       content,
-      type,
+      type: "system",
       read: false,
     });
 

@@ -24,7 +24,6 @@ router.post(
     .withMessage("Content is required!")
     .trim()
     .escape(),
-  body("type").notEmpty().withMessage("Type is required!").trim().escape(),
   Validate,
   controller.sendMessage
 );

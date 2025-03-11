@@ -1,0 +1,70 @@
+/* css file for creating trainings */
+.send-message-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.send-message-container h2 {
+  text-align: center;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+.send-message-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.send-message-form label {
+  font-weight: bold;
+  color: #444;
+}
+
+.send-message-form input,
+.send-message-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.send-message-form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.send-message-form button {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.send-message-form button:hover {
+  background: #c9302c;
+}
+
+.message {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
