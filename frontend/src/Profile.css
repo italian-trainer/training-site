@@ -1,0 +1,89 @@
+/* Profile.css */
+
+/* Style for the container */
+.profile-container {
+    padding: 1rem;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Manager Info Section */
+.manager-info {
+    text-align: center;
+    padding: 1rem;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+}
+
+.manager-info h2 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.manager-info h3 {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+.manager-info p {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Personal Info Section */
+.personal-info {
+    padding: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.personal-info h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Individual info item */
+.info-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding: 0.75rem 0;
+}
+
+.info-item span {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Button styling for edit */
+.info-item button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.info-item button:hover {
+    background-color: #c9302c;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-item button {
+        margin-top: 0.5rem;
+    }
+}
