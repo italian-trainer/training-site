@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./AddEmployee.css";
 
 export default function AddEmployee() {
     const [first_name, setFirstName] = useState("");
@@ -45,7 +46,7 @@ export default function AddEmployee() {
     };
 
     return (
-        <div>
+        <div className="add-employee-container">
             <h2>Manager: Add Employee</h2>
             <form onSubmit={handleSubmit}>
                 <div>
