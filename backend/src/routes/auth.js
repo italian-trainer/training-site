@@ -13,22 +13,9 @@ router.post(
     .isEmail()
     .withMessage("Email address is invalid")
     .normalizeEmail(),
-  body("first_name")
-    .notEmpty()
-    .withMessage("First name is required!")
-    .trim()
-    .escape(),
-  body("last_name")
-    .notEmpty()
-    .withMessage("Last name is required!")
-    .trim()
-    .escape(),
+  body("first_name").withMessage("First name is required!").trim().escape(),
+  body("last_name").withMessage("Last name is required!").trim().escape(),
   body("password")
-    .notEmpty()
-    .isLength({ min: 8 })
-    .withMessage("Password must be at least 8 characters!"),
-  body("password")
-    .notEmpty()
     .isLength({ min: 8 })
     .matches("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")
     .withMessage("Password must be at least 8 characters!"),

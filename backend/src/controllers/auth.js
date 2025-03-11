@@ -14,10 +14,10 @@ export async function Register(req, res) {
       });
     }
     // Update user info for potential edits
-    activeUser.first_name = first_name;
-    activeUser.last_name = last_name;
-    activeUser.email = email;
-    activeUser.password = password;
+    if (first_name) activeUser.first_name = first_name;
+    if (last_name) activeUser.last_name = last_name;
+    if (email) activeUser.email = email;
+    if (password) activeUser.password = password;
     await activeUser.save();
     res.status(200).json({
       status: "success",
