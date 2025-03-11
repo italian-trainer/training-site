@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./ManagerDashboard.css";
 import "./Roster.css";
 
@@ -11,6 +11,7 @@ const ManagerDashboard = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTraining, setSelectedTraining] = useState("");
+  const navigate = useNavigate();
 
   //Employee Roster
   useEffect(() => {
@@ -76,6 +77,31 @@ const ManagerDashboard = () => {
 
     fetchTrainings();
   }, []);
+
+  //logout fetch
+  const fetchLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:5005/auth/logout", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+
+      if (!response.ok) throw new Error("Failed to log out");
+
+      const data = await response.json();
+      console.log("Logout Data:", data);
+
+      //redirect to login
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      setError("Failed to log out.");
+    }
+  };
 
   //dropdown
   const handleAccountClick = () => {
@@ -161,7 +187,9 @@ const ManagerDashboard = () => {
                   <Link to="/messages">Messages</Link>
                 </li>
                 <li>
-                  <Link to="/login">Log Out</Link>
+                <button onClick={fetchLogout} className="logout-button">
+                  Log Out
+                </button>
                 </li>
               </ul>
             </div>

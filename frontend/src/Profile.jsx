@@ -34,6 +34,7 @@ const Profile = () => {
                     lastName: data.data.last_name,
                     email: data.data.email,
                     employeeID: data.data.user_id,
+                    role: data.data.role,
                     displayedPassword: "********" //for security
                 });
             } else {
@@ -115,7 +116,7 @@ const Profile = () => {
         {/* Manager */}
         <div className="manager-info">
           <h2>{employee.firstName} {employee.lastName}</h2>
-          <h3>Active Manager</h3>
+          <h3>Active {employee.role}</h3>
           <p>{employee.employeeID}</p>
         </div>
   

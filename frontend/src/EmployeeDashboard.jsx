@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import TrainingViewer from "./TrainingComponent";
+import "./EmployeeDashboard.css";
 
 const EmployeeDashboard = () => {
   const [trainings, setTrainings] = useState([]);
   const [loadedTraining, runTraining] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchTrainings = async () => {
       try {
@@ -37,8 +42,63 @@ const EmployeeDashboard = () => {
 
     fetchTrainings();
   }, []);
+
+  //logout fetch
+  const fetchLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:5005/auth/logout", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+
+      if (!response.ok) throw new Error("Failed to log out");
+
+      const data = await response.json();
+      console.log("Logout Data:", data);
+
+      //redirect to login
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      setError("Failed to log out.");
+    }
+  };
+
+  //dropdown for profile
+  const handleAccountClick = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   return (
     <>
+      {/* Account Section */}
+      <div className="account-section">
+          <button className="account-button" onClick={handleAccountClick}>
+            Account
+          </button>
+          {showDropdown && (
+            <div className="account-dropdown">
+              <ul>
+                <li>
+                  <Link to="/profile">Profile</Link>
+                </li>
+                <li>
+                  <Link to="/messages">Messages</Link>
+                </li>
+                <li>
+                <button onClick={fetchLogout} className="logout-button">
+                  Log Out
+                </button>
+                </li>
+              </ul>
+            </div>
+          )}
+      </div>
+
       <h1>Employee Dashboard</h1>
       {(!loadedTraining && (
         <section className="assigned-trainings">
