@@ -24,7 +24,7 @@ export async function Verify(req, res, next) {
     });
   } catch (err) {
     console.log(err);
-    res.catch(500).json({
+    res.status(500).json({
       status: "error",
       code: 500,
       data: [],

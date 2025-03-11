@@ -15,4 +15,17 @@ const QuizSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+// {
+// title: "title of quiz",
+// description: "description of quiz"
+// questions : [
+// {
+// question: "what is the answer?"
+// options: ["a", "b", "c"],
+// answer: "b"
+//}
+// ]
+// }
+//
+
 export default mongoose.model("Quiz", QuizSchema);
