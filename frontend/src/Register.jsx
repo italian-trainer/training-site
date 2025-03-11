@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./Register.css";
 
 export default function Register() {
     const [user_id, setUserID] = useState("");
@@ -56,7 +57,7 @@ export default function Register() {
     };
 
     return (
-        <div>
+        <div className="register-container">
             <h2>Register:</h2>
             <form onSubmit={handleSubmit}>
                 <div>
