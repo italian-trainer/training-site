@@ -186,6 +186,7 @@ export async function assignTraining(req, res) {
       current_page: 0, // Start at page 0
       total_pages: assigned_training.total_pages,
       complete: false,
+      quiz: assigned_training.quiz,
     });
     await assigned_training.save();
     await assigned_user.save();

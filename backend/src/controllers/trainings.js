@@ -128,6 +128,7 @@ export async function getPage(req, res) {
             current_page: page,
             total_pages: current_training.total_pages,
             complete: false,
+            quiz: current_training.quiz,
           },
         },
       },

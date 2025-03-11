@@ -83,6 +83,7 @@ const EmployeeDashboard = () => {
             trainingName={loadedTraining.training}
             startPage={loadedTraining.current_page}
             maxPages={loadedTraining.total_pages}
+            quiz={loadedTraining.quiz}
           />
           <button
             onClick={() => {
