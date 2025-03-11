@@ -1,23 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #ffe5e5;
+                color: #333;
+                margin: 0;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+            }
+    
+            .container {
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                max-width: 1000px;
+                width: 100%;
+                padding: 20px;
+                margin: 0 auto;
+            }
+    
+            h1 {
+                text-align: center;
+                color: #d10000;
+                font-size: 2.5em;
+                margin-bottom: 20px;
+                margin-top: 5px;
+    
+            }
+    
+            h2 {
+                color: #b30000;
+                border-bottom: 2px solid #d10000;
+                padding-bottom: 5px;
+                margin-top: 30px;
+            }
+    
+            h3 {
+                color: #990000;
+                margin-top: 20px;
+                
+            }
+            h4 {
+                font-size: 1.2em;
+            }
+    
+            p {
+                line-height: 1.6;
+                margin: 10px 0;
+                font-size: 1.2em;
+            }
+    
+            strong {
+                color: #d10000;
+            }
+    
+            em {
+                color: #b30000;
+            }
+    
+            ul, ol {
+                padding-left:50px;
+                margin: 20px 0;
+            }
+    
+            ul li, ol li {
+                margin-bottom: 5px;
+                padding: 10px;
+                background-color: #f9f9f9;
+                border-left: 4px solid #d10000;
+            }
+    
+            ul li {
+                list-style-type: square;
+            }
+    
+            ol li {
+                list-style-type: decimal;
+            }
+    
+            .image-container {
+                text-align: center;
+                margin: 20px 0;
+            }
+    
+            .image-container img {
+                display: block;
+                max-width: 80%;
+                max-height: 400px;
+                height: auto;
+                margin: 0 auto;
+                border: 5px solid #d10000;
+                border-radius: 10px;
+    
+            }
+    
+            .caption {
+                font-size: 1em;
+                color: #666;
+                margin-top: 5px;
+                text-align: center;
+            }
+        </style>
+    </head>
 <body>
     <header>
-        <h1>Preperation</h1>
-        <nav>
-            <ul>
-                <li><a href="module3.html">Next</a></li>
-                <li><a href="module1.html">Prev</a></li>
-                <li><a href="index.html">Home</a></li>
-            </ul>
-        </nav>
+
     </header>
-    <main>
+    <div class="container">
+        <h1>Preperation</h1>
         <h2>Uniform Standard for FOH Team</h2>
         <p>
             <strong>Servers:</strong> Non faded BLACK wrinkle free collared button down fitted dress 
@@ -33,7 +129,10 @@
             (professionally fitted- no baggy jeans, no Capri’s) No ankles showing, pants
             should be long enough to cover ankles or black socks covering ankles.
         </p>
-        <img src="images/uniform.png" alt = "Marias uniform Standard" />
+        <div class="image-container">
+            <img src="images/uniform.png" alt = "Marias uniform Standard" />
+            <p class="caption">Server Uniform</p>
+        </div>
         <!-- Update Accordingly , Include Server/Busser/Cashier uniform-->
 
         <h2>Being "Of Service"</h2>
@@ -207,7 +306,8 @@
         </p>
     
         <p>
-            If the number is <strong>seven or more</strong>: <em>
+            If the number is <b>seven or more</b>: 
+            <br/><em>
                 “Ok, absolutely. Let me have you talk to
                 my manager, Mark, and he can make that reservation for you. Can you hold for
                 just one moment?”
@@ -215,12 +315,12 @@
         </p>
     
         <p>
-            <strong>Reservations should always be handled by a manager</strong>, in case there are any special considerations
+            <b>Reservations should always be handled by a manager</b>, in case there are any special considerations
             or arrangements that need to be made.
         </p>
     
         <p>
-            If the number is <strong>six or fewer</strong>: “Ok, well we only take reservations for parties
+            If the number is <b>six or fewer</b>: “Ok, well we only take reservations for parties
             of seven or more but we do offer a call ahead wait list, so if
             you’d like to call us when you’re on your way, we can go ahead and
             put your name down.”
@@ -230,6 +330,6 @@
 
 
 
-    </main>
+    </div>
 </body>
 </html>
