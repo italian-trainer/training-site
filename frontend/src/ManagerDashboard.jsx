@@ -184,7 +184,12 @@ const ManagerDashboard = () => {
           <Link to="/addEmployee">
             <button className="addEmployee">+ Add Employee</button>
           </Link>
-          <button className="create-training-btn">+ Create Training</button>
+          <Link to="/createTraining">
+            <button className="create-training-btn">+ Create Training</button>
+          </Link>
+          <Link to="/createQuiz">
+            <button className="create-quiz-btn">+ Create Quiz</button>
+          </Link>
         </div>
       </main>
     </div>

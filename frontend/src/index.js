@@ -12,6 +12,8 @@ import EmployeeDashboard from "./EmployeeDashboard";
 import AddEmployee from "./AddEmployee";
 import Register from "./Register";
 import Profile from "./Profile";
+import CreateTraining from "./CreateTraining"
+import CreateQuiz from "./CreateQuiz"
 
 //employee training modules
 import TrainingLayout from "./pages/training/TrainingLayout";
@@ -32,6 +34,8 @@ const router = createBrowserRouter([
     { path: "/addEmployee", element: <AddEmployee /> },
     { path: "/register", element: <Register /> },
     { path: "/profile", element: <Profile /> },
+    { path: "/createTraining", element: <CreateTraining /> },
+    { path: "/createQuiz", element: <CreateQuiz /> },
     
     // Training Routes
     { path: "/training/:role", element: <TrainingLayout /> },
