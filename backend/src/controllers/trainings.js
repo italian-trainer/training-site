@@ -201,11 +201,13 @@ export async function submitQuiz(req, res) {
         if (current_user.assigned_trainings[i].get("training") == training) {
           var training_data = current_user.assigned_trainings[i];
           current_user.assigned_trainings.splice(i, 1);
+          console.log(quiz);
           current_user.assigned_trainings.push({
             training: training_data.get("training"),
             current_page: training_data.get("current_page"),
             total_pages: training_data.get("total_pages"),
             complete: true,
+            quiz
           });
           await current_user.save();
           res.status(200).json({

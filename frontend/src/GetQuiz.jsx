@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-export default function QuizViewer({ quizName }) {
+export default function QuizViewer({ quizName, trainingName }) {
   const [quiz, setQuiz] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
-  // Fetch quiz data from API
+  // get quiz data 
   const fetchQuiz = async () => {
     setLoading(true);
     setError("");
@@ -22,7 +24,7 @@ export default function QuizViewer({ quizName }) {
       });
 
       const data = await response.json();
-      console.log(data.data);
+      console.log("Fetched Quiz:", data.data);
       if (response.ok) {
         setQuiz(data.data[0] || {});
       } else {
@@ -35,7 +37,56 @@ export default function QuizViewer({ quizName }) {
     setLoading(false);
   };
 
-  //get the quiz
+  //answer selection
+  const handleAnswerSelect = (questionIndex, option) => {
+    setSelectedAnswers((prev) => ({
+      ...prev,
+      [questionIndex]: option,
+    }));
+  };
+
+  //send answers to api
+  const handleSubmit = async () => {
+    setSubmitted(true);
+
+    const formattedAnswers = Object.keys(selectedAnswers).map((index) => (
+    selectedAnswers[index]
+    ));
+    try {
+      console.log(JSON.stringify({
+        training: trainingName,
+        quiz: quizName,
+        filled_form: formattedAnswers,
+      }));
+
+      const response = await fetch("http://localhost:5005/trainings/submit_quiz", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          training: trainingName,
+          quiz: quizName,
+          filled_form: formattedAnswers,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Submission Response:", data);
+
+      if (response.ok) {
+        alert("Quiz submitted successfully!");
+      } else {
+        alert('Error: Unable to submit quiz');
+      }
+    } catch (error) {
+      alert("Request failed: " + error.message);
+    }
+  };
+
+  //get the quiz from component
   useEffect(() => {
     if (quizName) fetchQuiz();
   }, [quizName]);
@@ -67,18 +118,36 @@ export default function QuizViewer({ quizName }) {
                   </p>
                   <ul>
                     {question.options.map((option, idx) => (
-                      <li key={idx}>{option}</li>
+                      <li key={idx}>
+                        <label>
+                          <input
+                            type="radio"
+                            name={`question-${index}`}
+                            value={option}
+                            checked={selectedAnswers[index] === option}
+                            onChange={() => handleAnswerSelect(index, option)}
+                            disabled={submitted}
+                          />
+                          {option}
+                        </label>
+                      </li>
                     ))}
                   </ul>
-                  <p>
-                    <strong>Answer:</strong> {question.answer}
-                  </p>
                 </div>
               ))
             ) : (
               <p>No questions available.</p>
             )}
           </div>
+
+          {/* submit */}
+          {!submitted ? (
+            <button onClick={handleSubmit} className="submit-quiz-btn">
+              Submit Quiz
+            </button>
+          ) : (
+            <p className="submitted-message">Quiz Submitted!</p>
+          )}
         </div>
       ) : (
         <p>No quiz data available.</p>

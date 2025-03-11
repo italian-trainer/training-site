@@ -65,7 +65,7 @@ export default function TrainingViewer({
       ) : type == "html" ? (
         <p className="page-content">{content}</p>
       ) : (
-        <QuizViewer quizName={quiz} />
+        <QuizViewer quizName={quiz} trainingName={trainingName} />
       )}
 
       <div className="navigation-buttons">
