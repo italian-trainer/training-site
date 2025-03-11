@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./ManagerDashboard.css";
+import "./Roster.css";
 
 const ManagerDashboard = () => {
   // State for toggling the account dropdown
   const [showDropdown, setShowDropdown] = useState(false);
   const [employees, setEmployees] = useState([]); // Store employees
+  const [trainings, setTrainings] = useState([]); // Store trainings
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -44,24 +46,35 @@ const ManagerDashboard = () => {
   }, []);
 
 
-  // Sample data for assigned trainings
-  const assignedTrainings = [
-    {
-      id: 1,
-      title: "Training 1: Modules",
-      assignedTo: ["885092", "127362"]
-    },
-    {
-      id: 2,
-      title: "Training 2: Quiz",
-      assignedTo: ["189273", "871287", "192873"]
-    },
-    {
-      id: 3,
-      title: "Training 3: Modules",
-      assignedTo: ["238434", "123439", "734623", "348573"]
-    }
-  ];
+  // Fetch Assigned Trainings 
+  useEffect(() => {
+    const fetchTrainings = async () => {
+      try {
+        const response = await fetch("http://localhost:5005/trainings/list_trainings", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+          },
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch trainings");
+
+        const data = await response.json();
+        console.log("Data:", data.data);
+        
+        setTrainings(data.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching trainings:", error);
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchTrainings();
+  }, []);
 
   // Toggle the dropdown menu
   const handleAccountClick = () => {
@@ -113,20 +126,29 @@ const ManagerDashboard = () => {
         {/* ASSIGNED TRAININGS SECTION */}
         <section className="assigned-trainings">
           <h3>Assigned Trainings</h3>
+          {loading ? (
+            <p>Loading trainings...</p>
+          ) : error ? (
+            <p className="error">{error}</p>
+          ) : (
           <div className="training-list">
-            {assignedTrainings.map((training) => (
+            {trainings.map((training) => (
               <div key={training.id} className="training-card">
-                <h4>{training.title}</h4>
-                <p>
-                  <strong>Assigned To:</strong>{" "}
-                  {training.assignedTo.join(", ")}
+                <h4 className="training-title">{training.title}</h4>
+                <p className="assigned-users">
+                  <strong>Assigned Users:</strong> {training.assigned_users.map(user => user.display_name).join(", ")}
+                </p>
+                <p className="training-description">
+                  <strong>Description:</strong> {training.description || "No description provided"}
                 </p>
               </div>
             ))}
           </div>
+          )}
         </section>
 
-        {/* EMPLOYEE ROSTER (Embedded) */}
+
+        {/* EMPLOYEE ROSTER */}
         <section className="employee-roster">
           <h3>Employee Roster</h3>
           {loading ? (
