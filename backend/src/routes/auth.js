@@ -13,8 +13,8 @@ router.post(
     .isEmail()
     .withMessage("Email address is invalid")
     .normalizeEmail(),
-  body("first_name").withMessage("First name is required!").trim().escape(),
-  body("last_name").withMessage("Last name is required!").trim().escape(),
+  body("first_name").trim().escape(),
+  body("last_name").trim().escape(),
   body("password")
     .isLength({ min: 8 })
     .matches("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")
