@@ -80,13 +80,27 @@
             list-style-type: decimal;
         }
 
-        img {
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .image-container img {
             display: block;
-            max-width: 50%;
+            max-width: 80%;
+            max-height: 400px;
             height: auto;
-            margin: 20px auto;
+            margin: 0 auto;
             border: 5px solid #d10000;
             border-radius: 10px;
+
+        }
+
+        .caption {
+            font-size: 1em;
+            color: #666;
+            margin-top: 5px;
+            text-align: center;
         }
     </style>
 </head>
@@ -102,7 +116,10 @@
             family, and we hope that as a member of our family you will always take pride in giving
             only your best to the team and to our guests. </p>
         <p>Welcome aboard and good luck in training! </p>
-        <img src="images/originalMIK.png" alt="ogMIK" />
+        <div class="image-container">
+            <img src="images/originalMIK.png" alt="ogMIK" />
+            <p class="caption">The original Maria's Italian Restaurant was a remodeled garage</p>
+        </div>
 
         <h2>Maria’s History</h2>
         <p> Yes, there really is a Maria! </p>
@@ -126,7 +143,11 @@
             we all share. That ongoing growth means opportunity for every member of the team,
             and that now includes you. We are glad to have you as part of the family and hope you’ll
             be proud to be a part of Maria’s rich and continuing history.</p>
-        <img src="images/maBaby.png" alt = "Maria Alfano as a baby" /> 
+        
+        <div class="image-container">
+            <img src="images/maBaby.png" alt = "Maria Alfano as a baby" />             
+            <p class="caption">Maria Alfano as a baby</p>
+        </div>
 
         <h2>Maria’s Culture</h2>
         <p>Maria’s Italian Kitchen is about family, and we consider every member of this small
@@ -148,7 +169,10 @@
         <p>Come in with a positive attitude and a smile for your guests and fellow team members,
             and always show respect for everyone you see. That’s what it means to be a part of the
             Maria’s family.</p>
-        <img src="images/cooking.png" alt = "Madelyn and Maria in the kitchen" />
+        <div class="image-container">
+            <img src="images/cooking.png" alt = "Madelyn and Maria in the kitchen" />
+            <p class="caption">Madelyn and Maria in the kitchen</p>
+        </div>
 
         <p>You will see this posted in your restaurant because we really mean to live
             our culture and mission every day!</p>

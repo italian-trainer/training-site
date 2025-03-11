@@ -1,12 +1,12 @@
 {
     "title": "Quiz1",
-    "description": "Quiz2",
+    "description": "First Employee Quiz",
     "questions": [
 
         {
-            "quesion": " ",
-            "options": "",
-            "answer": ""
+            "quesion": "What is the first ingredient we use?",
+            "options": ["Salt", "Pepper", "Garlic", "Love"],
+            "answer": "Love"
         }
     ]
 }
