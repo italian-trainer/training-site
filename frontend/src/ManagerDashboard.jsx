@@ -9,6 +9,7 @@ const ManagerDashboard = () => {
   const [trainings, setTrainings] = useState([]); //trainings
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   //Employee Roster
   useEffect(() => {
@@ -80,6 +81,31 @@ const ManagerDashboard = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const filteredEmployees = employees.filter((employee) =>
+    `${employee.first_name} ${employee.last_name} ${employee.email}`
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
+
+  const sortedEmployees = [...filteredEmployees].sort((a, b) => {
+    const searchLower = searchQuery.toLowerCase();
+    const aMatch = a.first_name.toLowerCase() === searchLower || 
+                   a.last_name.toLowerCase() === searchLower || 
+                   a.email.toLowerCase() === searchLower;
+    const bMatch = b.first_name.toLowerCase() === searchLower || 
+                   b.last_name.toLowerCase() === searchLower || 
+                   b.email.toLowerCase() === searchLower;
+  
+    return bMatch - aMatch; //exact matches to top
+  });
+
+  const filteredTrainings = trainings.filter((training) =>
+    `${training.title} ${training.description}`
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
+
+
   return (
     <div className="manager-dashboard-container">
       {/* HEADER */}
@@ -117,8 +143,10 @@ const ManagerDashboard = () => {
         <div className="search-bar">
           <input
             type="text"
-            placeholder="Search trainings..."
-            aria-label="Search Trainings"
+            placeholder="Search employees or trainings..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            aria-label="Search Trainings and Employees"
           />
         </div>
 
@@ -129,9 +157,9 @@ const ManagerDashboard = () => {
             <p>Loading trainings...</p>
           ) : error ? (
             <p className="error">{error}</p>
-          ) : (
+          ) : filteredTrainings.length > 0 ? (
           <div className="training-list">
-            {trainings.map((training) => (
+            {filteredTrainings.map((training) => (
               <div key={training.id} className="training-card">
                 <h4 className="training-title">{training.title}</h4>
                 <p className="assigned-users">
@@ -143,6 +171,8 @@ const ManagerDashboard = () => {
               </div>
             ))}
           </div>
+          ) : (
+            <p>No trainings match your search.</p>
           )}
         </section>
 
@@ -154,7 +184,7 @@ const ManagerDashboard = () => {
             <p>Loading employees...</p>
           ) : error ? (
             <p className="error">{error}</p>
-          ) : (
+          ) : sortedEmployees.length > 0 ? (
             <table className="roster-table">
               <thead>
                 <tr>
@@ -165,7 +195,7 @@ const ManagerDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {employees.map((employee) => (
+                {sortedEmployees.map((employee) => (
                   <tr key={employee.user_id}>
                     <td>{employee.first_name}</td>
                     <td>{employee.last_name}</td>
@@ -175,6 +205,8 @@ const ManagerDashboard = () => {
                 ))}
               </tbody>
             </table>
+          ) : (
+            <p>No employees match your search.</p>
           )}
         </section>
 
