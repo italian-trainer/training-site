@@ -73,3 +73,16 @@
     font-size: 0.85rem;
     color: #666;
   }
+  .employee-roster-link {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* Add space between roster and action buttons */
+.employee-roster {
+  margin: 2rem 0; /* Space above and below */
+  padding: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
