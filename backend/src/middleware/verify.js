@@ -23,12 +23,11 @@ export async function Verify(req, res, next) {
       next();
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json({
       status: "error",
       code: 500,
       data: [],
-      message: `Error in verification: ${error}`,
+      message: `Error in verification: ${err}`,
     });
   }
 }
