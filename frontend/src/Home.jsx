@@ -9,7 +9,7 @@ const HomePage = () => {
       <h1>Welcome to Maria's Italian Kitchen Training Course</h1>
       <div className="logo-container">
         <img 
-          src={Logo} // Use the imported Logo here
+          src={Logo} //imported logo
           alt="Maria's Italian Restaurant Logo"
           className="logo" 
         />

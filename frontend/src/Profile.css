@@ -1,6 +1,5 @@
-/* Profile.css */
+/* css for profile */
 
-/* Style for the container */
 .profile-container {
     padding: 1rem;
     background-color: #f9f9f9;
@@ -10,7 +9,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Manager Info Section */
 .manager-info {
     text-align: center;
     padding: 1rem;
@@ -35,7 +33,6 @@
     color: #333;
 }
 
-/* Personal Info Section */
 .personal-info {
     padding: 1rem;
     background-color: white;
@@ -48,7 +45,6 @@
     margin-bottom: 1rem;
 }
 
-/* Individual info item */
 .info-item {
     display: flex;
     align-items: center;
@@ -62,7 +58,6 @@
     color: #333;
 }
 
-/* Button styling for edit */
 .info-item button {
     background-color: #d9534f;
     color: white;
@@ -76,7 +71,6 @@
     background-color: #c9302c;
 }
 
-/* Responsive Design */
 @media (max-width: 600px) {
     .info-item {
         flex-direction: column;

@@ -1,4 +1,4 @@
-/* Roster Container */
+/* roster css file */
 .roster-container {
     max-width: 900px;
     margin: 2rem auto;
@@ -9,14 +9,12 @@
     text-align: center;
 }
 
-/* Header */
 .roster-container h2 {
     color: #d9534f;
     font-size: 1.8rem;
     margin-bottom: 1rem;
 }
 
-/* Table Styles */
 .roster-table {
     width: 100%;
     border-collapse: collapse;
@@ -24,7 +22,6 @@
     font-size: 1rem;
 }
 
-/* Table Header */
 .roster-table th {
     background-color: #d9534f;
     color: white;
@@ -33,24 +30,20 @@
     font-weight: bold;
 }
 
-/* Table Rows */
 .roster-table td {
     padding: 0.75rem;
     border-bottom: 1px solid #ddd;
 }
 
-/* Alternate row colors for readability */
 .roster-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-/* Hover effect for rows */
 .roster-table tbody tr:hover {
     background-color: #ffe0e0;
     transition: 0.3s ease-in-out;
 }
 
-/* Loading & Error Messages */
 .loading, .error {
     font-size: 1.2rem;
     font-weight: bold;
@@ -61,7 +54,6 @@
     color: red;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .roster-container {
         padding: 1rem;

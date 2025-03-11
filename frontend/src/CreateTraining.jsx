@@ -12,7 +12,7 @@ export default function CreateTraining() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Ensure inputs are not empty
+        //make sure inputs are not empty
         if (!title.trim() || !description.trim()) {
             setMessage("Error: Title and description cannot be empty.");
             return;
@@ -39,15 +39,22 @@ export default function CreateTraining() {
             const data = await response.json();
             console.log("Response:", response);
             console.log("Data:", data.data);
+            console.log(response.message);
+            console.log(JSON.stringify({ 
+                title, 
+                description, 
+                pages: pages.split("\n").map(page => page.trim()).filter(page => page), //text to array
+                quiz
+              }))
 
             if (response.ok) {
-                setMessage(`Training "${data.data.title}" created successfully!`);
+                setMessage('Training created successfully!');
                 setTitle("");
                 setDescription("");
                 setPages("");
                 setQuiz("");
             } else {
-                setMessage(`Error: ${data.message || "Unable to create training"}`);
+                setMessage('Error: Unable to create training');
             }
         } catch (error) {
             setMessage("Request failed: " + error.message);

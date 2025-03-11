@@ -3,10 +3,10 @@ import { useState } from "react";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(""); // To show errors or success messages
-  const navigate = useNavigate(); // Used to redirect after login
+  const [message, setMessage] = useState(""); //show errors or success messages
+  const navigate = useNavigate(); //used to redirect after login
 
-  // Function to handle form submission
+  //handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 

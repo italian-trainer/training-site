@@ -14,9 +14,9 @@
     display: inline-block;
     margin-bottom: 30px;
     padding: 20px;
-    background-color: #fff; /* Optional: background color for image container */
+    background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: shadow for a better look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .logo {

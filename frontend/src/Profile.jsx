@@ -49,10 +49,10 @@ const Profile = () => {
     }, []);
   
     const handleEdit = async (field) => {
-        const newValue = prompt(`Edit ${field}:`, employee[field]);
-        if (newValue === null || newValue.trim() === "") return; //Prevent empty values
+        const newValue = prompt('Edit ${field}:', employee[field]);
+        if (newValue === null || newValue.trim() === "") return; //prevent empty values
 
-        //Check password requirements
+        //password requirements
         if (field === "password") {
             const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
             if (!passwordRegex.test(newValue)) {
@@ -61,7 +61,7 @@ const Profile = () => {
             }
         }
 
-        // Prepare request body for backend
+        //request to backend (body)
         const updatedData = {
         email: employee.email,
         user_id: employee.employeeID,
@@ -69,7 +69,7 @@ const Profile = () => {
         last_name: employee.lastName, 
         };
 
-        // Update only the changed field
+        //only update field that got changed
         if (field === "firstName") updatedData.first_name = newValue;
         if (field === "lastName") updatedData.last_name = newValue;
         if (field === "email") updatedData.email = newValue;
@@ -102,7 +102,7 @@ const Profile = () => {
                 });
                 alert("Profile updated successfully!");
             } else {
-                alert(`Error: ${data.message || "Unable to update profile"}`);
+                alert('Error: Unable to update profile');
             }
         } catch (error) {
             alert("Request failed: " + error.message);
@@ -112,14 +112,14 @@ const Profile = () => {
     return (
       <div className="profile-container">
   
-        {/* Manager Info */}
+        {/* Manager */}
         <div className="manager-info">
           <h2>{employee.firstName} {employee.lastName}</h2>
           <h3>Active Manager</h3>
           <p>{employee.employeeID}</p>
         </div>
   
-        {/* Personal Info Section */}
+        {/* Personal Info */}
         <div className="personal-info">
           <h4>Personal Info:</h4>
           <div className="info-item">

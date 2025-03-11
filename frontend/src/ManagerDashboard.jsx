@@ -4,14 +4,13 @@ import "./ManagerDashboard.css";
 import "./Roster.css";
 
 const ManagerDashboard = () => {
-  // State for toggling the account dropdown
   const [showDropdown, setShowDropdown] = useState(false);
-  const [employees, setEmployees] = useState([]); // Store employees
-  const [trainings, setTrainings] = useState([]); // Store trainings
+  const [employees, setEmployees] = useState([]); //employees
+  const [trainings, setTrainings] = useState([]); //trainings
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch Employee Roster
+  //Employee Roster
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -28,7 +27,7 @@ const ManagerDashboard = () => {
 
         const data = await response.json();
         
-        // Filter out users where user_id === email
+        //filter out users where user_id === email
         const filteredEmployees = data.data.filter(
           (employee) => employee.user_id !== employee.email
         );
@@ -46,7 +45,7 @@ const ManagerDashboard = () => {
   }, []);
 
 
-  // Fetch Assigned Trainings 
+  //fetch trainings
   useEffect(() => {
     const fetchTrainings = async () => {
       try {
@@ -110,11 +109,11 @@ const ManagerDashboard = () => {
         </div>
       </header>
 
-      {/* MAIN CONTENT */}
+      {/* Content */}
       <main className="dashboard-main">
         <h2>Manager Dashboard</h2>
 
-        {/* SEARCH BAR */}
+        {/* Search */}
         <div className="search-bar">
           <input
             type="text"
@@ -123,7 +122,7 @@ const ManagerDashboard = () => {
           />
         </div>
 
-        {/* ASSIGNED TRAININGS SECTION */}
+        {/* Assigned Trainings */}
         <section className="assigned-trainings">
           <h3>Assigned Trainings</h3>
           {loading ? (
@@ -148,7 +147,7 @@ const ManagerDashboard = () => {
         </section>
 
 
-        {/* EMPLOYEE ROSTER */}
+        {/* Employee Roster */}
         <section className="employee-roster">
           <h3>Employee Roster</h3>
           {loading ? (
@@ -179,7 +178,7 @@ const ManagerDashboard = () => {
           )}
         </section>
 
-        {/* ACTION BUTTONS */}
+        {/* Buttons */}
         <div className="actions">
           <Link to="/addEmployee">
             <button className="addEmployee">+ Add Employee</button>

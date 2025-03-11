@@ -13,11 +13,12 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Ensure inputs are not empty
+        //make sure nothing empty 
         if (!user_id.trim() || !email.trim() || !first_name.trim() || !last_name.trim()) {
             setMessage("Error: User ID, Email, First Name, or Last Name cannot be empty.");
             return;
         }
+        //check password
         const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
         if (!passwordRegex.test(newValue)) {
             alert("Error: Password must be at least 8 characters long, contain at least 1 uppercase letter, and 1 number.");
@@ -47,7 +48,7 @@ export default function Register() {
                 setEmail("");
                 setUserID("");
             } else {
-                setMessage(`Error: ${data.message || "Unable to register user"}`);
+                setMessage('Error: Unable to register user');
             }
         } catch (error) {
             setMessage("Request failed: " + error.message);
