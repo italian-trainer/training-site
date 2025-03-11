@@ -10,6 +10,7 @@ const ManagerDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTraining, setSelectedTraining] = useState("");
 
   //Employee Roster
   useEffect(() => {
@@ -76,7 +77,7 @@ const ManagerDashboard = () => {
     fetchTrainings();
   }, []);
 
-  // Toggle the dropdown menu
+  //dropdown
   const handleAccountClick = () => {
     setShowDropdown(!showDropdown);
   };
@@ -104,6 +105,39 @@ const ManagerDashboard = () => {
       .toLowerCase()
       .includes(searchQuery.toLowerCase())
   );
+
+  //to assign trainings
+  const assignTraining = async (employeeEmail) => {
+    if (!selectedTraining) {
+      alert("Please select a training before assigning.");
+      return;
+    }
+  
+    try {
+      const response = await fetch("http://localhost:5005/roster/assign_training", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          email: employeeEmail, //email
+          training: selectedTraining, //selected training
+        }),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        alert('Training assigned successfully!');
+        setSelectedTraining(""); //reset dropdown
+      } else {
+        alert('Error: Unable to assign training');
+      }
+    } catch (error) {
+      alert("Request failed: " + error.message);
+    }
+  };
 
 
   return (
@@ -192,6 +226,7 @@ const ManagerDashboard = () => {
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Employee ID</th>
+                  <th>Assign Training</th>
                 </tr>
               </thead>
               <tbody>
@@ -201,6 +236,25 @@ const ManagerDashboard = () => {
                     <td>{employee.last_name}</td>
                     <td>{employee.email}</td>
                     <td>{employee.user_id}</td>
+                    <td>
+                    <select
+                      className="training-dropdown"
+                      onChange={(e) => setSelectedTraining(e.target.value)}
+                    >
+                      <option value="">Select Training</option>
+                      {trainings.map((training) => (
+                        <option key={training.id} value={training.title}>
+                          {training.title}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      className="assign-training-btn"
+                      onClick={() => assignTraining(employee.email)}
+                    >
+                      Assign
+                    </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -62,3 +62,23 @@
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.training-dropdown {
+  padding: 5px;
+  margin-right: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.assign-training-btn {
+  background-color: #0e0f0e;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.assign-training-btn:hover {
+  background-color: #218838;
+}
