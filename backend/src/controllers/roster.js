@@ -36,9 +36,6 @@ export async function addToRoster(req, res) {
 }
 
 export async function readRoster(req, res) {
-  if (req.user.role == "employee") {
-    return res.sendStatus(401); // Employees cannot read roster
-  }
   try {
     const users = await User.find();
     if (users == null) {
@@ -50,11 +47,16 @@ export async function readRoster(req, res) {
       });
       return;
     }
-    var out = {};
-    console.log(users);
+    var out = [];
     for (const i in users) {
-      const { user_id, __v, _id, ...user_data } = users[i]._doc;
-      out[user_id] = user_data;
+      if (req.user.role == "employee") {
+        const { user_id, assigned_trainings, messages, __v, ...user_info } =
+          users[i]._doc;
+        out.push(user_info);
+      } else {
+        const { __v, messages, ...user_info } = users[i]._doc; // Managers can see user_ids and trainings
+        out.push(user_info);
+      }
     }
     res.status(200).json({
       status: "success",
