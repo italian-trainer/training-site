@@ -36,13 +36,28 @@ function LoadMessage({ openMessage }) {
     message && (
       <div>
         <div class="message-header">
-          From: {message.sender.first_name + " " + message.sender.last_name}
-          Subject: {message.subject}
-          Type: {message.type}
+          <h3>
+            From:{" "}
+            {decode(message.sender.first_name + " " + message.sender.last_name)}
+          </h3>
+          <h3>Subject: {decode(message.subject)}</h3>
         </div>
-        <div class="message-contents">{message.contents}</div>
+        <p class="message-contents">{decode(message.content)}</p>
       </div>
     )
+  );
+}
+
+function MessageRow({ setOpenMessage, message }) {
+  return (
+    <tr onClick={() => setOpenMessage(message._id)}>
+      <td>
+        {decode(message.sender.first_name) +
+          " " +
+          decode(message.sender.last_name)}
+      </td>
+      <td>{decode(message.subject)}</td>
+    </tr>
   );
 }
 
@@ -116,15 +131,6 @@ export default function Messages() {
       <main className="messages-main">
         <h2>Messages</h2>
 
-        {/* SEARCH BAR */}
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search messages..."
-            aria-label="Search Messages"
-          />
-        </div>
-
         {/* ASSIGNED TRAININGS SECTION */}
         <section className="messages">
           {loading ? (
@@ -136,36 +142,30 @@ export default function Messages() {
                   <tr>
                     <th>Sender</th>
                     <th>Subject</th>
-                    <th>Type</th>
                   </tr>
                   {messages.map((message) => (
-                    <tr
-                      onClick={() => setOpenMessage(message._id)}
+                    <MessageRow
+                      setOpenMessage={setOpenMessage}
+                      message={message}
                       key={message._id}
-                    >
-                      <td>
-                        {decode(message.sender.first_name) +
-                          " " +
-                          decode(message.sender.last_name)}
-                      </td>
-                      <td>{decode(message.subject)}</td>
-                      <td>{decode(message.type)}</td>
-                    </tr>
+                    />
                   ))}
                 </table>
               )}
             </>
           ) : (
-            <LoadMessage openMessage={openMessage} />
+            <>
+              <button onClick={() => setOpenMessage("")}>Close</button>
+              <LoadMessage openMessage={openMessage} />
+            </>
           )}
         </section>
 
         {/* ACTION BUTTONS */}
         <div className="actions">
-          <Link to="/addEmployee">
-            <button className="addEmployee">+ Add Employee</button>
+          <Link to="/sendMessage">
+            <button className="sendMessage">Send Message</button>
           </Link>
-          <button className="create-training-btn">+ Create Training</button>
         </div>
       </main>
     </div>
