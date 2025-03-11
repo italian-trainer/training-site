@@ -3,6 +3,17 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { server_key } from "../config/index.js";
 
+const AssignedSchema = new mongoose.Schema({
+  training: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  current_page: { type: Number, required: true }, // Start at page 0
+  total_pages: { type: Number, required: true },
+  complete: { type: Boolean, required: true },
+});
+
 const UserSchema = new mongoose.Schema(
   {
     user_id: {
@@ -45,7 +56,7 @@ const UserSchema = new mongoose.Schema(
     // contents: ddjdjdjdjd
     // }
     assigned_trainings: {
-      type: [Map],
+      type: [AssignedSchema],
     },
     // {
     // training_name: dhjdshjshjds,

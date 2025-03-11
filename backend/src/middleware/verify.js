@@ -10,12 +10,12 @@ export async function Verify(req, res, next) {
     const cookie = loginCookie.split("=")[1].split(";")[0]; // Ignore metadata, grab cookie contents, must be updated if new cookies are added
     // Verify cookie
     const blockList = await Blocklist.findOne({ cookie });
-    console.log(blockList);
+    // console.log(blockList);
     if (blockList)
       return res.status(401).json({ message: "Session has logged out!" });
     jwt.verify(cookie, server_key, async (err, decoded) => {
       if (err) {
-        console.log(err);
+        // console.log(err);
         return res
           .status(401)
           .json({ message: "This session is expired. Please log back in." });

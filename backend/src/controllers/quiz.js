@@ -167,7 +167,7 @@ export async function deleteQuestions(req, res) {
       res.status(404).json({
         status: "error",
         code: 404,
-        message: "Quiz is not fouond!",
+        message: "Quiz is not found!",
       });
     }
     //Find and delete question from a quiz's questions array

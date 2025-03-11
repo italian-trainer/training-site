@@ -104,47 +104,55 @@ export async function getPage(req, res) {
       return;
     }
     var out = {};
-    var current_user = await User.findById(req.user._id);
 
-    if (page >= 0 && page <= current_training.total_pages) {
-      for (var i in current_user.assigned_trainings) {
-        if (current_user.assigned_trainings[i].get("training") == training) {
-          var training_data = current_user.assigned_trainings[i];
-          current_user.assigned_trainings.splice(i, 1);
-          current_user.assigned_trainings.push({
-            training: training_data.get("training"),
-            current_page: page,
-            total_pages: training_data.get("total_pages"),
-            complete: training_data.get("complete"),
-          });
-          break;
-        }
-      }
-      if (page == current_training.total_pages) {
-        out = { type: "quiz", body: current_training.quiz };
-      } else {
-        out = { type: "html", body: current_training.pages[page] };
-      }
-      await current_user.save();
-      res.status(200).json({
-        status: "success",
-        message: "Page retrieved successfully",
-        data: out,
-      });
-    } else {
-      res.status(500).json({
+    if (page < 0 || page > current_training.total_pages) {
+      return res.status(500).json({
         status: "error",
         code: 500,
         data: [],
         message: "Page is out of bounds!",
       });
     }
+
+    if (page == current_training.total_pages) {
+      out = { type: "quiz", body: current_training.quiz };
+    } else {
+      out = { type: "html", body: current_training.pages[page] };
+    }
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user._id, "assigned_trainings.training": training },
+      {
+        $set: {
+          "assigned_trainings.$": {
+            training: training,
+            current_page: page,
+            total_pages: current_training.total_pages,
+            complete: false,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(500).json({
+        status: "error",
+        code: 500,
+        message: "Error in current page update...",
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: "Page retrieved successfully",
+      data: out,
+    });
   } catch (err) {
     res.status(500).json({
       status: "error",
       code: 500,
       data: [],
-      message: `Error during training addition: ${err}`,
+      message: `Error during training access: ${err}`,
     });
   }
 }
