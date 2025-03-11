@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Blocklist from "../models/Blocklist.js";
 import bcrypt from "bcrypt";
 
 export async function Register(req, res) {
@@ -74,6 +75,28 @@ export async function Login(req, res) {
       code: 500,
       data: [],
       message: `Error in login: ${err}`,
+    });
+  }
+}
+
+export async function Logout(req, res) {
+  try {
+    const loginCookie = req.headers["cookie"];
+    if (!loginCookie) return res.sendStatus(401); // If cookie DNE, unauthorzied
+    const cookie = loginCookie.split("=")[1].split(";")[0]; // Ignore metadata, grab cookie contents, must be updated if new cookies are added
+    // Verify cookie
+    const blockList = await Blocklist.findOne({ cookie });
+    if (blockList) return res.sendStatus(204);
+    const newBlockList = new Blocklist({ cookie });
+    await newBlockList.save();
+    res.setHeader("Clear-Site-Data", '"cookies"');
+    res.status(200).json({ message: "You are logged out!" });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      data: [],
+      message: `Error in verification: ${err}`,
     });
   }
 }

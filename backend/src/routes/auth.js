@@ -1,7 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 // Gather middleware & controllers
-import { Register, Login, getInfo } from "../controllers/auth.js";
+import { Register, Login, getInfo, Logout } from "../controllers/auth.js";
 import Validate from "../middleware/validate.js";
 import Verify from "../middleware/verify.js";
 
@@ -39,6 +39,7 @@ router.post(
     .withMessage("Password must be at least 8 characters!"),
   Login
 );
+router.get("/logout", Verify, Logout);
 router.get("/get_info", Verify, getInfo);
 
 export default router;

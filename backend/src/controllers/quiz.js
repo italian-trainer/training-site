@@ -17,10 +17,46 @@ export async function getQuiz(req, res) {
   try {
     const { quizID } = req.params;
     const quiz = await Quiz.findById(quizID);
+    if (quiz == none) {
+      return res.status(500).json({
+        status: "error",
+        code: 500,
+        data: [],
+        message: "Quiz not found!",
+      });
+    }
     res.status(200).json({
       status: "success",
       code: 200,
       data: quiz,
+      message: "Quiz retrieved successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      data: [],
+      message: `Error fetching data: ${err}`,
+    });
+  }
+}
+
+export async function getQuizByName(req, res) {
+  try {
+    const { quiz } = req.body;
+    const ret_quiz = await Quiz.find({ title: quiz });
+    if (ret_quiz == null) {
+      return res.status(500).json({
+        status: "error",
+        code: 500,
+        data: [],
+        message: "Quiz not found!",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      data: ret_quiz,
       message: "Quiz retrieved successfully",
     });
   } catch (err) {

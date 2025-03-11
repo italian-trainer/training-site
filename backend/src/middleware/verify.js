@@ -1,14 +1,18 @@
 import User from "../models/User.js";
+import Blocklist from "../models/Blocklist.js";
 import jwt from "jsonwebtoken";
 import { server_key } from "../config/index.js";
 
 export async function Verify(req, res, next) {
-  console.log("Verification executed");
   try {
     const loginCookie = req.headers["cookie"];
-    if (!loginCookie) return res.sendStatus(401); // If cookie DNE, unauthorzied
+    if (!loginCookie) return res.status(401); // If cookie DNE, unauthorzied
     const cookie = loginCookie.split("=")[1].split(";")[0]; // Ignore metadata, grab cookie contents, must be updated if new cookies are added
     // Verify cookie
+    const blockList = await Blocklist.findOne({ cookie });
+    console.log(blockList);
+    if (blockList)
+      return res.status(401).json({ message: "Session has logged out!" });
     jwt.verify(cookie, server_key, async (err, decoded) => {
       if (err) {
         console.log(err);
