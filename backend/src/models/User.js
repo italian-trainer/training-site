@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      required: false,
+      required: "Email is required!",
     },
     role: {
       type: String,
@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       select: false,
-      validate: RegExp("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"),
+      validate: RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"),
     },
     messages: {
       type: [Map],
