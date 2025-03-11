@@ -1,1 +1,0 @@
-//Handles course-related endpoints
