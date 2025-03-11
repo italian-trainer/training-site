@@ -3,8 +3,9 @@ const { Schema } = mongoose;
 
 const MessageSchema = new Schema(
   {
-    sender: { type: Schema.Types.ObjectId, ref: "users" }, //Sender should be a manager or an admin. should be ID or username?
-    receiver: { type: Schema.Types.ObjectId, ref: "users" },
+    sender: { type: Schema.Types.ObjectId, ref: "users", required: true }, // Should be ID
+    receiver: { type: Schema.Types.ObjectId, ref: "users", required: true },
+    subject: { type: String, required: true },
     content: { type: String, required: true },
     type: {
       type: String,

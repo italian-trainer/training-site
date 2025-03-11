@@ -33,7 +33,7 @@ router.post(
   Validate,
   addToRoster
 );
-router.post("/get_all_users", Verify, readRoster);
+router.get("/get_all_users", Verify, readRoster);
 router.post(
   "/get_user_trainings",
   Verify,

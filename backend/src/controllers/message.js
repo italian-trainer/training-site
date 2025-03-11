@@ -3,18 +3,15 @@ import Message from "../models/Message.js";
 export async function sendMessage(req, res) {
   try {
     //who sends it and who receives it in the body of the request
-    const { sender, receiver, content, type } = req.body;
+    const { receiver, subject, content, type } = req.body;
     const message = new Message({
-      sender,
+      sender: req.user._id,
       receiver,
+      subject,
       content,
       type,
       read: false,
     });
-
-    if (!sender || !receiver || !content || !type) {
-      return res.status(400).json({ error: "All fields are required" });
-    }
 
     const savedMessage = await message.save(); //save the message to the database
     res.status(200).json({
@@ -31,21 +28,25 @@ export async function sendMessage(req, res) {
 //After send the message set it to read!
 export async function readMessages(req, res) {
   try {
-    const messages = await Message.find({ receiver: req.params.userId })
+    const messages = await Message.find({ receiver: req.user._id })
       .populate("sender", "first_name last_name email") // mongoose replaces sender's objectId with info
       .populate("receiver", "first_name last_name email")
       .sort({ timestamp: -1 });
-    res.json(
-      messages.map((message) => ({
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      message: "Messages fetched!",
+      data: messages.map((message) => ({
         _id: message._id,
         sender: message.sender,
         receiver: message.receiver,
         type: message.type,
+        subject: message.subject,
         //content: message.content,
         read: message.read,
         timestamp: message.timestamp,
-      }))
-    );
+      })),
+    });
   } catch (error) {
     res.status(400).send("Error fetching messages");
   }
@@ -53,12 +54,22 @@ export async function readMessages(req, res) {
 
 export async function markAsRead(req, res) {
   try {
-    const updatedMessage = await Message.findByIdAndUpdate(
-      req.params.messageId,
-      { read: true },
-      { new: true }
-    );
-    res.json(updatedMessage);
+    const updatedMessage = await Message.findById(req.params.messageId);
+    if (!updatedMessage) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+    if (!updatedMessage.receiver._id.equals(req.user._id)) {
+      res.sendStatus(401); // Cannot access messages that arent yours
+      return;
+    }
+    updatedMessage.read = true;
+    await updatedMessage.save();
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      data: updatedMessage,
+      message: "Message Sent!",
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -73,12 +84,16 @@ export async function getSingleMessage(req, res) {
     if (!message) {
       return res.status(404).json({ error: "Message not found" });
     }
+    if (!message.receiver._id.equals(req.user._id)) {
+      return res.sendStatus(401); // Can only access your own messages
+    }
 
     res.json({
       sender: message.sender,
       receiver: message.receiver,
+      subject: message.subject,
       content: message.content,
-      //read: message.read,
+      read: message.read,
       timestamp: message.timestamp,
     });
   } catch (error) {
