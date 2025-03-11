@@ -18,8 +18,9 @@ export default function Register() {
             setMessage("Error: User ID, Email, First Name, or Last Name cannot be empty.");
             return;
         }
-        if (password.length < 8){
-            setMessage("Error: Password must be longer than 8 characters");
+        const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
+        if (!passwordRegex.test(newValue)) {
+            alert("Error: Password must be at least 8 characters long, contain at least 1 uppercase letter, and 1 number.");
             return;
         }
 
