@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { backend_url } from "./config";
 import "./Messages.css";
 import { decode } from "html-entities";
+import fetchRole from "./fetch_user";
 
 function LoadMessage({ openMessage }) {
   const [message, setMessage] = useState(null);
@@ -64,6 +65,7 @@ function MessageRow({ setOpenMessage, message }) {
 export default function Messages() {
   // State for toggling the account dropdown
   const [showDropdown, setShowDropdown] = useState(false);
+  const [backLink, setLink] = useState("/messages");
   const [openMessage, setOpenMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -72,6 +74,13 @@ export default function Messages() {
   const handleAccountClick = () => {
     setShowDropdown(!showDropdown);
   };
+
+  useEffect(() => {
+    const fetchLink = async () => {
+      setLink(await fetchRole());
+    };
+    fetchLink();
+  });
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -165,6 +174,9 @@ export default function Messages() {
         <div className="actions">
           <Link to="/sendMessage">
             <button className="sendMessage">Send Message</button>
+          </Link>
+          <Link to={backLink}>
+            <button className="backButton">Go Back</button>
           </Link>
         </div>
       </main>

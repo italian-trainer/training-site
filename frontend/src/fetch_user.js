@@ -1,19 +1,20 @@
 import { backend_url } from "./config";
 
-async function fetchRole() {
+export default async function fetchRole() {
   const response = await fetch(backend_url + "/auth/get_info", {
-    method: "POST",
+    method: "GET",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       Accept: "*/*",
       Connection: "keep-alive",
     },
-    body: JSON.stringify({
-      receiver,
-      subject,
-      content,
-    }),
   });
+
+  const data = await response.json();
+  if (data.data.role == "employee") {
+    return "/employee";
+  } else {
+    return "/manager";
+  }
 }
-export default fetchRole;
