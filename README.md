@@ -2,8 +2,8 @@
 
 ![Site logo](/images/image.png)
 
-Training new employees can be **time-consuming and costly**, requiring hands-on guidance for various responsibilities.
-This site is a client/server app for managers employees of a restaurant. A platform specifically to train new employees or new practices of the restaurant. New employees can go through overall of the practices and responsibility of the restaurant which would save the time and less effort for the managers to train them in each and every single practice in the restaurant.
+Training new employees can be **time-consuming and costly**, requiring hands-on guidance for various responsibilities.  
+This site is a client/server app for managers employees of a restaurant. A platform specifically to train new employees or new practices of the restaurant. New employees can go through overall of the practices and responsibilities of the restaurant which would save the time and effort for the managers to train them individually in each and every task.
 
 The program is designed to be used with any restaurant with a minimal adjustment and this will be actually used at Maria's Italian restaurant.
 
@@ -19,26 +19,25 @@ The program is designed to be used with any restaurant with a minimal adjustment
 - **Notifications** – Alerts for incomplete training or upcoming assessments.
 - **Updates** - Editing a training module, add a new module, delete a module and the same for quiz feature
 
-The project contains a backend and frontend, which must be run in separate.
-
 ## **Installation & Setup**
 
-git clone https://github.com/italian-trianer/training-site.git
+git clone https://github.com/italian-trianer/training-site.git  
 cd training-site
 
 ## Execution of Project
 
-Ensure your current directory is in the project folder.
-To execute the backend:
+The project contains a backend and frontend, which must be run in separate.  
+Ensure your current directory is in the project folder.  
+#To execute the backend:
 
-cd backend
-npm install
+cd backend  
+npm install  
 npm run dev
 
-To execute the frontend:
+#To execute the frontend:
 
-cd frontend
-npm install
+cd frontend  
+npm install  
 npm start
 
 ## Default Login Credentials
@@ -64,7 +63,7 @@ The application relies on **MongoDB**, for storing user data, training modules, 
 
 ## Creator
 
-Yonatan Ahituv
-Divya Sikka
-Paramee songsang
+Yonatan Ahituv  
+Divya Sikka  
+Paramee songsang  
 Cristian Yanez
