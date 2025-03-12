@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Login.css";
+import fetchRole from "./fetch_user";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,6 +9,12 @@ const Login = () => {
   const [message, setMessage] = useState(""); //show errors or success messages
   const navigate = useNavigate(); //used to redirect after login
 
+  useEffect(() => {
+    const fetchPage = async () => {
+      navigate(await fetchRole());
+    };
+    fetchPage();
+  }, []);
   //handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,10 +25,10 @@ const Login = () => {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "*/*",
-          "Connection": "keep-alive"
+          Accept: "*/*",
+          Connection: "keep-alive",
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -43,8 +50,7 @@ const Login = () => {
       } else {
         setMessage("Error");
       }
-    } 
-    catch (error) {
+    } catch (error) {
       setMessage("Request failed: " + error.message);
     }
   };
@@ -55,27 +61,28 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
-          <input 
-            type="email" 
-            placeholder="Enter your email" 
+          <input
+            type="email"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required 
+            required
           />
         </div>
         <div>
           <label>Password:</label>
-          <input 
-            type="password" 
-            placeholder="Enter your password" 
+          <input
+            type="password"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required />
+            required
+          />
         </div>
         <button type="submit">Login</button>
       </form>
 
-      <p>{message}</p> 
+      <p>{message}</p>
 
       <Link to="/">Go Back</Link>
       <br />
@@ -84,7 +91,6 @@ const Login = () => {
       <Link to="/employee">Temp Employee Link</Link>
       <br />
       <Link to="/register">Register</Link>
-
     </div>
   );
 };
