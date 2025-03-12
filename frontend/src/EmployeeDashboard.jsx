@@ -3,6 +3,34 @@ import { Link, useNavigate } from "react-router-dom";
 import TrainingViewer from "./TrainingComponent";
 import "./EmployeeDashboard.css";
 
+const fetchTrainings = async (setTrainings, setLoading, setError) => {
+  try {
+    const response = await fetch(
+      "http://localhost:5005/trainings/get_trainings",
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+
+    if (!response.ok) throw new Error("Failed to fetch trainings");
+
+    const data = await response.json();
+    console.log("Data:", data.data);
+
+    setTrainings(data.data);
+    setLoading(false);
+  } catch (error) {
+    console.error("Error fetching trainings:", error);
+    setError(error.message);
+    setLoading(false);
+  }
+};
+
 const EmployeeDashboard = () => {
   const [trainings, setTrainings] = useState([]);
   const [loadedTraining, runTraining] = useState(null);
@@ -10,37 +38,12 @@ const EmployeeDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
-
+  if (loadedTraining || !loadedTraining) {
+    // On state change
+    fetchTrainings(setTrainings, setLoading, setError);
+  }
   useEffect(() => {
-    const fetchTrainings = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5005/trainings/get_trainings",
-          {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-
-        if (!response.ok) throw new Error("Failed to fetch trainings");
-
-        const data = await response.json();
-        console.log("Data:", data.data);
-
-        setTrainings(data.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching trainings:", error);
-        setError(error.message);
-        setLoading(false);
-      }
-    };
-
-    fetchTrainings();
+    fetchTrainings(setTrainings, setLoading, setError);
   }, []);
 
   //logout fetch
@@ -77,26 +80,26 @@ const EmployeeDashboard = () => {
     <>
       {/* Account Section */}
       <div className="account-section">
-          <button className="account-button" onClick={handleAccountClick}>
-            Account
-          </button>
-          {showDropdown && (
-            <div className="account-dropdown">
-              <ul>
-                <li>
-                  <Link to="/profile">Profile</Link>
-                </li>
-                <li>
-                  <Link to="/messages">Messages</Link>
-                </li>
-                <li>
+        <button className="account-button" onClick={handleAccountClick}>
+          Account
+        </button>
+        {showDropdown && (
+          <div className="account-dropdown">
+            <ul>
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+              <li>
+                <Link to="/messages">Messages</Link>
+              </li>
+              <li>
                 <button onClick={fetchLogout} className="logout-button">
                   Log Out
                 </button>
-                </li>
-              </ul>
-            </div>
-          )}
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
 
       <h1>Employee Dashboard</h1>
@@ -134,7 +137,7 @@ const EmployeeDashboard = () => {
               ))}
             </div>
           ) : (
-            <p>No trainings match your search.</p>
+            <p>No trainings currently assigned.</p>
           )}
         </section>
       )) || (
