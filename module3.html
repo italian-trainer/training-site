@@ -1,23 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #ffe5e5;
+                color: #333;
+                margin: 0;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+            }
+            .container {
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                max-width: 1000px;
+                width: 100%;
+                padding: 20px;
+                margin: 0 auto;
+            }
+
+            h1 {
+                text-align: center;
+                color: #d10000;
+                font-size: 2.5em;
+                margin-bottom: 20px;
+                margin-top: 5px;
+            }
+            h2 {
+                color: #b30000;
+                border-bottom: 2px solid #d10000;
+                padding-bottom: 5px;
+                margin-top: 30px;
+            }
+            h3 {
+                color: #990000;
+                margin-top: 20px;
+            }
+            h4 {
+                font-size: 1.2em;
+            }
+
+            p {
+                line-height: 1.6;
+                margin: 10px 0;
+                font-size: 1.2em;
+            }
+
+            strong {
+                color: #d10000;
+            }
+            em {
+                color: #b30000;
+            }
+
+            ul, ol {
+                padding-left:50px;
+                margin: 20px 0;
+            }
+            ul li {
+                list-style-type: square;
+                margin-bottom: 5px;
+                padding: 10px;
+                background-color: #f9f9f9;
+                border-left: 4px solid #d10000;
+            }
+            ol li {
+                margin-bottom: 5px;
+                padding: 10px;
+                list-style-type: decimal;
+            }
+    
+            .image-container {
+                text-align: center;
+                margin: 20px 0;
+            }
+            .image-container img {
+                display: block;
+                max-width: 80%;
+                max-height: 400px;
+                height: auto;
+                margin: 0 auto;
+                border: 5px solid #d10000;
+                border-radius: 10px;
+            }
+            .caption {
+                font-size: 1em;
+                color: #666;
+                margin-top: 5px;
+                text-align: center;
+            }
+        </style>
+    </head>
 <body>
     <header>
         <h1></h1>
-        <nav>
-            <ul>
-                <li><a href="module4.html">Next</a></li>
-                <li><a href="module2.html">Prev</a></li>
-                <li><a href="index.html">Home</a></li>
-            </ul>
-        </nav>
     </header>
-    <main>
+    <div class="container">
         <h1>Server: Sequence of Service Part 1</h1>
         <h2>Maria’s Italian Kitchen Server Sequence of Service (SOS)</h2>
         <ol>
@@ -231,6 +314,6 @@
 
 
         </ol>
-    </main>
+    </div>
 </body>
 </html>
