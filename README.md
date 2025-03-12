@@ -5,7 +5,7 @@
 Training new employees can be **time-consuming and costly**, requiring hands-on guidance for various responsibilities.  
 This site is a client/server app for managers employees of a restaurant. A platform specifically to train new employees or new practices of the restaurant. New employees can go through overall of the practices and responsibilities of the restaurant which would save the time and effort for the managers to train them individually in each and every task.
 
-The program is designed to be used with any restaurant with a minimal adjustment and this will be actually used at Maria's Italian restaurant.
+The program is designed to be used with any restaurant with a minimal adjustment and this will actually be used at Maria's Italian restaurant.
 
 ## Features
 
