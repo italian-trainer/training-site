@@ -4,27 +4,27 @@
     "questions": [
 
         {
-            "quesion": "What is the uniform shirt?",
+            "question": "What is the uniform shirt?",
             "options": ["Black Dress Shirt", "White Dress Shirt", "MIK T-Shirt", "No Uniform"],
             "answer": "Black Dress Shirt"
         },
         {
-            "quesion": "Should you try to do everything alone?",
+            "question": "Should you try to do everything alone?",
             "options": ["Yes", "No", "Sometimes", "Always"],
             "answer": "No"
         },
         {
-            "quesion": "Do servers have to answer the phone",
+            "question": "Do servers have to answer the phone",
             "options": ["Yes", "No", "Sometimes", "Always"],
             "answer": "Yes"
         },
         {
-            "quesion": "Does Marias Italian Kitchen Cater?",
+            "question": "Does Marias Italian Kitchen Cater?",
             "options": ["Yes", "No", "Sometimes", "Always"],
             "answer": "Yes"
         },
         {
-            "quesion": "Are reservations taken?",
+            "question": "Are reservations taken?",
             "options": ["Yes", "No", "Sometimes", "Always"],
             "answer": "Yes"
         }
