@@ -6,6 +6,7 @@ export default function QuizViewer({ quizName, trainingName }) {
   const [error, setError] = useState("");
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
 
   // get quiz data 
   const fetchQuiz = async () => {
@@ -78,6 +79,7 @@ export default function QuizViewer({ quizName, trainingName }) {
 
       if (response.ok) {
         alert("Quiz submitted successfully!");
+        setMessage(data.message);
       } else {
         alert('Error: Unable to submit quiz');
       }
@@ -93,7 +95,6 @@ export default function QuizViewer({ quizName, trainingName }) {
 
   return (
     <div className="quiz-viewer">
-      <h2>Quiz: {quizName}</h2>
 
       {loading ? (
         <p>Loading...</p>
@@ -146,7 +147,10 @@ export default function QuizViewer({ quizName, trainingName }) {
               Submit Quiz
             </button>
           ) : (
+            <>
             <p className="submitted-message">Quiz Submitted!</p>
+            {message && <p className="quiz-message">{message}</p>}
+            </>
           )}
         </div>
       ) : (
