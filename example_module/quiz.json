@@ -1,0 +1,12 @@
+{
+    "title": "Quiz1",
+    "description": "First Employee Quiz",
+    "questions": [
+
+        {
+            "question": "What is the first ingredient we use?",
+            "options": ["Salt", "Pepper", "Garlic", "Love"],
+            "answer": "Love"
+        }
+    ]
+}
