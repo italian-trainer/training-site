@@ -29,7 +29,8 @@ cd training-site
 
 The project contains a backend and frontend, which must be run in separate.  
 Ensure your current directory is in the project folder.  
-#To execute the backend:
+
+### To Execute the Backend
 
 ```sh
 cd backend
@@ -37,7 +38,7 @@ npm install
 npm run start
 ```
 
-#To execute the frontend:
+### To Execute the Frontend
 
 ```sh
 cd frontend
