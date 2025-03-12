@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import QuizViewer from "./GetQuiz";
+import parse from "html-react-parser";
 
 export default function TrainingViewer({
   trainingName,
@@ -63,7 +64,7 @@ export default function TrainingViewer({
       ) : error ? (
         <p className="error">{error}</p>
       ) : type == "html" ? (
-        <p className="page-content">{content}</p>
+        <div className="page-content">{parse(content)}</div>
       ) : (
         <QuizViewer quizName={quiz} trainingName={trainingName} />
       )}
