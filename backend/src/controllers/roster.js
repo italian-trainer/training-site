@@ -177,6 +177,7 @@ export async function assignTraining(req, res) {
     assigned_training.assigned_users.push({
       display_name: assigned_user.first_name + " " + assigned_user.last_name,
       email: email,
+      complete: false,
     });
     if (assigned_user.assigned_trainings == null) {
       assigned_user.assigned_trainings = {};

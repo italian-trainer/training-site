@@ -38,13 +38,9 @@ const EmployeeDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
-  if (loadedTraining || !loadedTraining) {
-    // On state change
-    fetchTrainings(setTrainings, setLoading, setError);
-  }
   useEffect(() => {
     fetchTrainings(setTrainings, setLoading, setError);
-  }, []);
+  }, [loadedTraining]);
 
   //logout fetch
   const fetchLogout = async () => {

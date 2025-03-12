@@ -190,39 +190,48 @@ export async function submitQuiz(req, res) {
       return;
     }
     var incorrect_questions = [];
-    for (i in target_quiz.questions) {
+    for (const i in target_quiz.questions) {
       if (filled_form[i] != target_quiz.questions[i].answer) {
         incorrect_questions.push(target_quiz.questions[i].question);
       }
     }
     if (incorrect_questions.length == 0) {
-      const current_user = await User.findById(req.user._id);
-      for (var i in current_user.assigned_trainings) {
-        if (current_user.assigned_trainings[i].get("training") == training) {
-          var training_data = current_user.assigned_trainings[i];
-          current_user.assigned_trainings.splice(i, 1);
-          console.log(quiz);
-          current_user.assigned_trainings.push({
-            training: training_data.get("training"),
-            current_page: training_data.get("current_page"),
-            total_pages: training_data.get("total_pages"),
-            complete: true,
-            quiz
-          });
-          await current_user.save();
-          res.status(200).json({
-            status: "success",
-            message: "Passed quiz!",
-            data: [],
-          });
-          return;
-        }
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: req.user._id, "assigned_trainings.training": training },
+        {
+          $set: {
+            "assigned_trainings.$": {
+              training: training,
+              current_page: target_training.total_pages + 1,
+              total_pages: target_training.total_pages,
+              complete: true,
+              quiz: target_training.quiz,
+            },
+          },
+        },
+        { new: true }
+      );
+      const updatedTraining = await Training.findOneAndUpdate(
+        { title: training, "assigned_users.email": req.user.email },
+        {
+          $set: {
+            "assigned_users.$": {
+              display_name: req.user.first_name + req.user.last_name,
+              email: req.user.email,
+              complete: true,
+            },
+          },
+        },
+        { new: true }
+      );
+
+      if (!updatedUser || !updatedTraining) {
+        return res.status(500).json({
+          status: "error",
+          code: 500,
+          message: "Error in quiz submission...",
+        });
       }
-      res.status(500).json({
-        status: "error",
-        message: "Training name invalid!",
-        data: [],
-      });
     } else {
       res.status(200).json({
         status: "success",

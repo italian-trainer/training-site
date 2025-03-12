@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const AssignmentSchema = new mongoose.Schema({
   display_name: { type: String, unique: false, require: true },
-  email: { type: String, unique: true, require: true },
+  email: { type: String, unique: false, require: true },
+  complete: { type: Boolean, require: true, default: false },
 });
 
 const TrainingSchema = new mongoose.Schema({
