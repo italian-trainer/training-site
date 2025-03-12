@@ -34,11 +34,13 @@ const ManagerDashboard = () => {
         const data = await response.json();
 
         //filter out users where user_id === email
-        const filteredEmployees = data.data.filter(
-          (employee) => employee.user_id !== employee.email
-        );
+        const modifiedEmployees = data.data.map((employee) => ({
+          ...employee,
+          email: employee.user_id === employee.email ? "[USER NOT REGISTERED]" : employee.email,
+        }));
+        
+        setEmployees(modifiedEmployees);
 
-        setEmployees(filteredEmployees);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching employees:", error);
