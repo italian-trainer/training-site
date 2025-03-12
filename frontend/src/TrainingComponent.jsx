@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import QuizViewer from "./GetQuiz";
-import parse from "html-react-parser";
 
 export default function TrainingViewer({
   trainingName,
@@ -49,6 +48,7 @@ export default function TrainingViewer({
     fetchPage(page);
   }, [page, trainingName]);
 
+
   //navigation
   const handleNext = () => setPage((prev) => prev + 1);
   const handlePrev = () => setPage((prev) => (prev > 0 ? prev - 1 : 0));
@@ -64,7 +64,7 @@ export default function TrainingViewer({
       ) : error ? (
         <p className="error">{error}</p>
       ) : type == "html" ? (
-        <div className="page-content">{parse(content)}</div>
+        <div dangerouslySetInnerHTML={{__html:content}} />
       ) : (
         <QuizViewer quizName={quiz} trainingName={trainingName} />
       )}
