@@ -232,6 +232,11 @@ export async function submitQuiz(req, res) {
           message: "Error in quiz submission...",
         });
       }
+      return res.status(200).json({
+        status: "success",
+        message: "Passed quiz!",
+        data: incorrect_questions,
+      });
     } else {
       res.status(200).json({
         status: "success",
