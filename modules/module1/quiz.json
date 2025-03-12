@@ -1,0 +1,22 @@
+{
+    "title": "Quiz1",
+    "description": "First Employee Quiz",
+    "questions": [
+
+        {
+            "quesion": "What is the first ingredient we use?",
+            "options": ["Salt", "Pepper", "Garlic", "Love"],
+            "answer": "Love"
+        },
+        {
+            "quesion": "How many restaurants does Marias Italian Kitchen have?",
+            "options": ["7", "8", "9", "10"],
+            "answer": "10"
+        },
+        {
+            "quesion": "Is Marias Italian Kitchen a neighborhood restaurant?",
+            "options": ["Yes", "No"],
+            "answer": "Yes"
+        }
+    ]
+}

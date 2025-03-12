@@ -1,0 +1,6 @@
+{
+    "name": "module7",
+    "description": "Alcohol Awareness",
+    "quiz_file": "quiz.json",
+    "page_files": ["page1.html", "page2.html","page3.html"]
+}

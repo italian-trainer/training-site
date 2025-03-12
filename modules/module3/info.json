@@ -1,0 +1,6 @@
+{
+    "name": "module3",
+    "description": "You will learn the first steps on the sequnce of service.",
+    "quiz_file": "quiz.json",
+    "page_files": ["page1.html", "page2.html", "page3.html"]
+}
