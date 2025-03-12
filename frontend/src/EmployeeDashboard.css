@@ -1,0 +1,41 @@
+/* css for employee dashboard */
+
+
+.account-section {
+    display: flex;
+    justify-content: flex-end; 
+    margin-right: 20px; 
+}
+
+.account-button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.account-dropdown {
+    position: absolute;
+    right: 20px; 
+    background: white;
+    border: 1px solid #ddd;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.account-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.account-dropdown li {
+    padding: 8px 12px;
+}
+
+.account-dropdown li:hover {
+    background-color: #f1f1f1;
+}

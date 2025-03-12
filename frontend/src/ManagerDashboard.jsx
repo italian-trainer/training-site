@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./ManagerDashboard.css";
 import "./Roster.css";
 
@@ -11,24 +11,28 @@ const ManagerDashboard = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTraining, setSelectedTraining] = useState("");
+  const navigate = useNavigate();
 
   //Employee Roster
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch("http://localhost:5005/roster/get_all_users", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-          },
-        });
+        const response = await fetch(
+          "http://localhost:5005/roster/get_all_users",
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
 
         if (!response.ok) throw new Error("Failed to fetch employee data");
 
         const data = await response.json();
-        
+
         //filter out users where user_id === email
         const filteredEmployees = data.data.filter(
           (employee) => employee.user_id !== employee.email
@@ -46,25 +50,27 @@ const ManagerDashboard = () => {
     fetchEmployees();
   }, []);
 
-
   //fetch trainings
   useEffect(() => {
     const fetchTrainings = async () => {
       try {
-        const response = await fetch("http://localhost:5005/trainings/list_trainings", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-          },
-        });
+        const response = await fetch(
+          "http://localhost:5005/trainings/list_trainings",
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
 
         if (!response.ok) throw new Error("Failed to fetch trainings");
 
         const data = await response.json();
         console.log("Data:", data.data);
-        
+
         setTrainings(data.data);
         setLoading(false);
       } catch (error) {
@@ -76,6 +82,31 @@ const ManagerDashboard = () => {
 
     fetchTrainings();
   }, []);
+
+  //logout fetch
+  const fetchLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:5005/auth/logout", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+
+      if (!response.ok) throw new Error("Failed to log out");
+
+      const data = await response.json();
+      console.log("Logout Data:", data);
+
+      //redirect to login
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      setError("Failed to log out.");
+    }
+  };
 
   //dropdown
   const handleAccountClick = () => {
@@ -90,13 +121,15 @@ const ManagerDashboard = () => {
 
   const sortedEmployees = [...filteredEmployees].sort((a, b) => {
     const searchLower = searchQuery.toLowerCase();
-    const aMatch = a.first_name.toLowerCase() === searchLower || 
-                   a.last_name.toLowerCase() === searchLower || 
-                   a.email.toLowerCase() === searchLower;
-    const bMatch = b.first_name.toLowerCase() === searchLower || 
-                   b.last_name.toLowerCase() === searchLower || 
-                   b.email.toLowerCase() === searchLower;
-  
+    const aMatch =
+      a.first_name.toLowerCase() === searchLower ||
+      a.last_name.toLowerCase() === searchLower ||
+      a.email.toLowerCase() === searchLower;
+    const bMatch =
+      b.first_name.toLowerCase() === searchLower ||
+      b.last_name.toLowerCase() === searchLower ||
+      b.email.toLowerCase() === searchLower;
+
     return bMatch - aMatch; //exact matches to top
   });
 
@@ -112,33 +145,36 @@ const ManagerDashboard = () => {
       alert("Please select a training before assigning.");
       return;
     }
-  
+
     try {
-      const response = await fetch("http://localhost:5005/roster/assign_training", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          email: employeeEmail, //email
-          training: selectedTraining, //selected training
-        }),
-      });
-  
+      const response = await fetch(
+        "http://localhost:5005/roster/assign_training",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            email: employeeEmail, //email
+            training: selectedTraining, //selected training
+          }),
+        }
+      );
+
       const data = await response.json();
+      console.log(data);
       if (response.ok) {
-        alert('Training assigned successfully!');
+        alert("Training assigned successfully!");
         setSelectedTraining(""); //reset dropdown
       } else {
-        alert('Error: Unable to assign training');
+        alert("Error: Unable to assign training");
       }
     } catch (error) {
       alert("Request failed: " + error.message);
     }
   };
-
 
   return (
     <div className="manager-dashboard-container">
@@ -161,7 +197,9 @@ const ManagerDashboard = () => {
                   <Link to="/messages">Messages</Link>
                 </li>
                 <li>
-                  <Link to="/login">Log Out</Link>
+                  <button onClick={fetchLogout} className="logout-button">
+                    Log Out
+                  </button>
                 </li>
               </ul>
             </div>
@@ -172,8 +210,6 @@ const ManagerDashboard = () => {
       {/* Content */}
       <main className="dashboard-main">
         <h2>Manager Dashboard</h2>
-
-        {/* Search */}
         <div className="search-bar">
           <input
             type="text"
@@ -183,8 +219,6 @@ const ManagerDashboard = () => {
             aria-label="Search Trainings and Employees"
           />
         </div>
-
-        {/* Assigned Trainings */}
         <section className="assigned-trainings">
           <h3>Assigned Trainings</h3>
           {loading ? (
@@ -192,26 +226,33 @@ const ManagerDashboard = () => {
           ) : error ? (
             <p className="error">{error}</p>
           ) : filteredTrainings.length > 0 ? (
-          <div className="training-list">
-            {filteredTrainings.map((training) => (
-              <div key={training.id} className="training-card">
-                <h4 className="training-title">{training.title}</h4>
-                <p className="assigned-users">
-                  <strong>Assigned Users:</strong> {training.assigned_users.map(user => user.display_name).join(", ")}
-                </p>
-                <p className="training-description">
-                  <strong>Description:</strong> {training.description || "No description provided"}
-                </p>
-              </div>
-            ))}
-          </div>
+            <div className="training-list">
+              {filteredTrainings.map((training) => (
+                <div key={training.id} className="training-card">
+                  <h4 className="training-title">{training.title}</h4>
+                  <p className="assigned-users">
+                    <strong>Assigned Users:</strong>{" "}
+                    {training.assigned_users.map((user) => (
+                      <span
+                        key={user.display_name}
+                        style={{ color: user.complete ? "green" : "inherit" }}
+                      >
+                        {user.display_name}
+                        {user.complete ? ": complete" : ""}
+                      </span>
+                    ))}
+                  </p>
+                  <p className="training-description">
+                    <strong>Description:</strong>{" "}
+                    {training.description || "No description provided"}
+                  </p>
+                </div>
+              ))}
+            </div>
           ) : (
             <p>No trainings match your search.</p>
           )}
         </section>
-
-
-        {/* Employee Roster */}
         <section className="employee-roster">
           <h3>Employee Roster</h3>
           {loading ? (
@@ -237,23 +278,23 @@ const ManagerDashboard = () => {
                     <td>{employee.email}</td>
                     <td>{employee.user_id}</td>
                     <td>
-                    <select
-                      className="training-dropdown"
-                      onChange={(e) => setSelectedTraining(e.target.value)}
-                    >
-                      <option value="">Select Training</option>
-                      {trainings.map((training) => (
-                        <option key={training.id} value={training.title}>
-                          {training.title}
-                        </option>
-                      ))}
-                    </select>
-                    <button
-                      className="assign-training-btn"
-                      onClick={() => assignTraining(employee.email)}
-                    >
-                      Assign
-                    </button>
+                      <select
+                        className="training-dropdown"
+                        onChange={(e) => setSelectedTraining(e.target.value)}
+                      >
+                        <option value="">Select Training</option>
+                        {trainings.map((training) => (
+                          <option key={training.id} value={training.title}>
+                            {training.title}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        className="assign-training-btn"
+                        onClick={() => assignTraining(employee.email)}
+                      >
+                        Assign
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -263,8 +304,6 @@ const ManagerDashboard = () => {
             <p>No employees match your search.</p>
           )}
         </section>
-
-        {/* Buttons */}
         <div className="actions">
           <Link to="/addEmployee">
             <button className="addEmployee">+ Add Employee</button>

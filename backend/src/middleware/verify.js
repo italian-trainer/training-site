@@ -6,7 +6,8 @@ import { server_key } from "../config/index.js";
 export async function Verify(req, res, next) {
   try {
     const loginCookie = req.headers["cookie"];
-    if (!loginCookie) return res.status(401); // If cookie DNE, unauthorzied
+    if (!loginCookie)
+      return res.status(401).json({ message: "No login cookie found!" }); // If cookie DNE, unauthorzied
     const cookie = loginCookie.split("=")[1].split(";")[0]; // Ignore metadata, grab cookie contents, must be updated if new cookies are added
     // Verify cookie
     const blockList = await Blocklist.findOne({ cookie });

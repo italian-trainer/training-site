@@ -177,6 +177,7 @@ export async function assignTraining(req, res) {
     assigned_training.assigned_users.push({
       display_name: assigned_user.first_name + " " + assigned_user.last_name,
       email: email,
+      complete: false,
     });
     if (assigned_user.assigned_trainings == null) {
       assigned_user.assigned_trainings = {};
@@ -186,6 +187,7 @@ export async function assignTraining(req, res) {
       current_page: 0, // Start at page 0
       total_pages: assigned_training.total_pages,
       complete: false,
+      quiz: assigned_training.quiz,
     });
     await assigned_training.save();
     await assigned_user.save();
@@ -200,6 +202,53 @@ export async function assignTraining(req, res) {
       code: 500,
       data: [],
       message: `Error during training assignment: ${err}`,
+    });
+  }
+}
+
+export async function deassignTraining(req, res) {
+  if (req.user.role == "employee") {
+    return res.sendStatus(401); // Employees cannot read roster
+  }
+  const { training, email } = req.body;
+  try {
+    const updatedTraining = await Training.findOneAndUpdate(
+      { title: training, "assigned_users.email": email },
+      {
+        $pull: {
+          assigned_users: { email },
+        },
+      },
+      { new: true }
+    );
+    const updatedUser = await User.findOneAndUpdate(
+      { email: email, "assigned_trainings.training": training },
+      {
+        $pull: {
+          assigned_trainings: { training },
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedUser || !updatedTraining) {
+      return res.status(500).json({
+        status: "error",
+        code: 500,
+        message: "Error in training deassignment...",
+      });
+    }
+    return res.status(200).json({
+      status: "success",
+      message: "Successfully deassigned training",
+      data: [],
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      data: [],
+      message: `Error during training deassignment: ${err}`,
     });
   }
 }

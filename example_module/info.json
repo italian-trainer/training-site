@@ -1,0 +1,6 @@
+{
+  "name": "test training",
+  "description": "test description",
+  "quiz_file": "quiz.json",
+  "page_files": ["module.html", "module1.html"]
+}

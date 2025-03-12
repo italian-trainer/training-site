@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
+import QuizViewer from "./GetQuiz";
 
-export default function TrainingViewer({ trainingName, startPage, maxPages }) {
+export default function TrainingViewer({
+  trainingName,
+  startPage,
+  maxPages,
+  quiz,
+}) {
   const [page, setPage] = useState(startPage);
+  const [type, setType] = useState("html");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,6 +30,7 @@ export default function TrainingViewer({ trainingName, startPage, maxPages }) {
       });
 
       const data = await response.json();
+      setType(data.data.type);
       if (response.ok) {
         setContent(data.data.body || "No content available.");
       } else {
@@ -54,8 +62,10 @@ export default function TrainingViewer({ trainingName, startPage, maxPages }) {
         <p>Loading...</p>
       ) : error ? (
         <p className="error">{error}</p>
-      ) : (
+      ) : type == "html" ? (
         <p className="page-content">{content}</p>
+      ) : (
+        <QuizViewer quizName={quiz} trainingName={trainingName} />
       )}
 
       <div className="navigation-buttons">

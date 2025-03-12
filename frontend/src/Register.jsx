@@ -21,7 +21,7 @@ export default function Register() {
         }
         //check password
         const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
-        if (!passwordRegex.test(newValue)) {
+        if (!passwordRegex.test(password)) {
             alert("Error: Password must be at least 8 characters long, contain at least 1 uppercase letter, and 1 number.");
             return;
         }

@@ -12,6 +12,7 @@ const AssignedSchema = new mongoose.Schema({
   current_page: { type: Number, required: true }, // Start at page 0
   total_pages: { type: Number, required: true },
   complete: { type: Boolean, required: true },
+  quiz: { type: String, required: true },
 });
 
 const UserSchema = new mongoose.Schema(
