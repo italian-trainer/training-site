@@ -33,14 +33,7 @@ const ManagerDashboard = () => {
 
         const data = await response.json();
 
-        //filter out users where user_id === email
-        const modifiedEmployees = data.data.map((employee) => ({
-          ...employee,
-          email: employee.user_id === employee.email ? "[USER NOT REGISTERED]" : employee.email,
-        }));
-        
-        setEmployees(modifiedEmployees);
-
+        setEmployees(data.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching employees:", error);
@@ -315,7 +308,7 @@ const ManagerDashboard = () => {
                   <tr key={employee.user_id}>
                     <td>{employee.first_name}</td>
                     <td>{employee.last_name}</td>
-                    <td>{employee.email}</td>
+                    <td>{employee.user_id === employee.email ? "[USER NOT REGISTERED]" : employee.email}</td>
                     <td>{employee.user_id}</td>
                     <td>
                       {/* Assign Training Dropdown */}
