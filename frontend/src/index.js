@@ -17,11 +17,6 @@ import CreateQuiz from "./CreateQuiz";
 import Messages from "./Messages";
 import SendMessage from "./SendMessage";
 
-//employee training modules
-import TrainingLayout from "./pages/training/TrainingLayout";
-import Module1Server from "./pages/training/server/Module1";
-import Module1Cashier from "./pages/training/cashier/Module1";
-import Module1Busser from "./pages/training/busser/Module1";
 
 const router = createBrowserRouter([
   {
@@ -42,14 +37,6 @@ const router = createBrowserRouter([
       { path: "/messages", element: <Messages /> },
       { path: "/sendMessage", element: <SendMessage /> },
 
-      // Training Routes
-      { path: "/training/:role", element: <TrainingLayout /> },
-      //Server
-      { path: "/training/server/module1", element: <Module1Server /> },
-      //Cashier
-      { path: "/training/cashier/module1", element: <Module1Cashier /> },
-      //Busser
-      { path: "/training/busser/module1", element: <Module1Busser /> },
     ],
   },
 ]);
