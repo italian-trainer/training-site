@@ -28,16 +28,15 @@ function UserDropdown({ setReceiver }) {
         console.log(data);
 
         //filter out users where user_id === email
-        const filteredEmployees = data.data.filter(
-          (employee) => employee.user_id !== employee.email
-        );
+        // const filteredEmployees = data.data.filter(
+        //   (employee) => employee.user_id !== employee.email
+        // );
 
-        setEmployees(filteredEmployees);
-        console.log(filteredEmployees);
+        setEmployees(data.data);
+        console.log(data.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching employees:", error);
-        setError(error.message);
         setLoading(false);
       }
     };
