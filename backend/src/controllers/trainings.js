@@ -7,6 +7,13 @@ export async function listTrainings(req, res) {
     return res.sendStatus(401); // Employees cannot read trainings
   }
   const trainings = await Training.find();
+  for (const i in trainings) {
+    for (const j in trainings[i].assigned_users) {
+      const user = await User.findById(trainings[i].assigned_users[j].id);
+      trainings[i].assigned_users[j].display_name =
+        user.first_name + " " + user.last_name;
+    }
+  }
   res.status(200).json({
     status: "success",
     code: 200,
