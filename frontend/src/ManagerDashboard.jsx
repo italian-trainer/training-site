@@ -162,7 +162,7 @@ const ManagerDashboard = () => {
       console.log(data);
       if (response.ok) {
         alert("Training assigned successfully!");
-        setSelectedTraining(""); //reset dropdown
+        // setSelectedTraining(""); //reset dropdown
       } else {
         alert("Error: Unable to assign training");
       }
@@ -199,7 +199,7 @@ const ManagerDashboard = () => {
       console.log(data);
       if (response.ok) {
         alert("Training removed successfully!");
-        setSelectedTraining(""); //reset dropdown
+        // setSelectedTraining(""); //reset dropdown
       } else {
         alert("Error: Unable to remove training");
       }

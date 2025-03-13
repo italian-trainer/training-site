@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./SendMessage.css";
 
-function UserDropdown({ setReceiver }) {
+function UserDropdown({ receiver, setReceiver }) {
   const [employees, setEmployees] = useState([]); //employees
   const [loading, setLoading] = useState(true);
 
@@ -46,9 +46,8 @@ function UserDropdown({ setReceiver }) {
   console.log(employees[0]);
   return (
     !loading && (
-      <select name="receiver" onChange={(e) => setReceiver(e.target.value)}>
+      <select name="receiver" value={receiver} onChange={(e) => setReceiver(e.target.value)}>
         <option key="start_opt" value="start_opt">
-            Pick a receiver
           </option>
         {employees.map((entry) => (
           <option key={entry._id} value={entry._id}>
@@ -123,7 +122,7 @@ export default function SendMessage() {
       <form className="send-message-form" onSubmit={handleSubmit}>
         <div>
           <label>Receiver:</label>
-          <UserDropdown setReceiver={setReceiver} />
+          <UserDropdown receiver={receiver} setReceiver={setReceiver} />
         </div>
         <div>
           <label>Subject:</label>
