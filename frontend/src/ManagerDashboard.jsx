@@ -270,7 +270,7 @@ const ManagerDashboard = () => {
                         style={{ color: user.complete ? "green" : "inherit" }}
                       >
                         {user.display_name}
-                        {user.complete ? ": complete" : ""}
+                        {user.complete ? ": complete, " : ", "}
                       </span>
                     ))}
                   </p>
