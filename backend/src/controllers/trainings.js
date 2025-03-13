@@ -216,7 +216,7 @@ export async function submitQuiz(req, res) {
         {
           $set: {
             "assigned_users.$": {
-              display_name: req.user.first_name + req.user.last_name,
+              display_name: req.user.first_name + " " + req.user.last_name,
               email: req.user.email,
               complete: true,
             },
