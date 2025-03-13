@@ -325,7 +325,7 @@ const ManagerDashboard = () => {
                       </select>
                       <button
                         className="assign-training-btn"
-                        onClick={() => assignTraining(employee.user_id)}
+                        onClick={() => assignTraining(employee._id)}
                       >
                         Assign
                       </button>
@@ -346,7 +346,7 @@ const ManagerDashboard = () => {
                       </select>
                       <button
                         className="remove-training-btn"
-                        onClick={() => unassignTraining(employee.user_id)}
+                        onClick={() => unassignTraining(employee._id)}
                       >
                         Remove
                       </button>
