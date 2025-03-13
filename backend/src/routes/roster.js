@@ -59,10 +59,10 @@ router.post(
 router.post(
   "/unassign_training",
   Verify,
-  body("email")
-    .isEmail()
-    .withMessage("Email address is invalid!")
-    .normalizeEmail(),
+  // body("email")
+  //   .isEmail()
+  //   .withMessage("Email address is invalid!")
+  //   .normalizeEmail(), for case user_id == email, just a lookup, so no problems occur
   body("training").notEmpty().withMessage("A training is required!"),
   Validate,
   deassignTraining
