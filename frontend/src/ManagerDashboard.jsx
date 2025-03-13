@@ -34,11 +34,13 @@ const ManagerDashboard = () => {
         const data = await response.json();
 
         //filter out users where user_id === email
-        const filteredEmployees = data.data.filter(
-          (employee) => employee.user_id !== employee.email
-        );
+        const modifiedEmployees = data.data.map((employee) => ({
+          ...employee,
+          email: employee.user_id === employee.email ? "[USER NOT REGISTERED]" : employee.email,
+        }));
+        
+        setEmployees(modifiedEmployees);
 
-        setEmployees(filteredEmployees);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching employees:", error);
@@ -176,6 +178,43 @@ const ManagerDashboard = () => {
     }
   };
 
+  //to unassign trainings
+  const unassignTraining = async (employeeEmail) => {
+    if (!selectedTraining) {
+      alert("Please select a training before removing.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:5005/roster/unassign_training",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            email: employeeEmail, //email
+            training: selectedTraining, //selected training
+          }),
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        alert("Training removed successfully!");
+        setSelectedTraining(""); //reset dropdown
+      } else {
+        alert("Error: Unable to remove training");
+      }
+    } catch (error) {
+      alert("Request failed: " + error.message);
+    }
+  };
+
   return (
     <div className="manager-dashboard-container">
       {/* HEADER */}
@@ -268,6 +307,7 @@ const ManagerDashboard = () => {
                   <th>Email</th>
                   <th>Employee ID</th>
                   <th>Assign Training</th>
+                  <th>Remove Training</th>
                 </tr>
               </thead>
               <tbody>
@@ -278,6 +318,7 @@ const ManagerDashboard = () => {
                     <td>{employee.email}</td>
                     <td>{employee.user_id}</td>
                     <td>
+                      {/* Assign Training Dropdown */}
                       <select
                         className="training-dropdown"
                         onChange={(e) => setSelectedTraining(e.target.value)}
@@ -294,6 +335,27 @@ const ManagerDashboard = () => {
                         onClick={() => assignTraining(employee.email)}
                       >
                         Assign
+                      </button>
+                    </td>
+
+                      {/* Remove Training Dropdown */}
+                    <td>
+                      <select
+                        className="training-dropdown"
+                        onChange={(e) => setSelectedTraining(e.target.value)}
+                      >
+                        <option value="">Select Training</option>
+                        {trainings.map((training) => (
+                          <option key={training.id} value={training.title}>
+                            {training.title}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        className="remove-training-btn"
+                        onClick={() => unassignTraining(employee.email)}
+                      >
+                        Remove
                       </button>
                     </td>
                   </tr>
