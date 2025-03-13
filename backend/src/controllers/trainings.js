@@ -212,12 +212,12 @@ export async function submitQuiz(req, res) {
         { new: true }
       );
       const updatedTraining = await Training.findOneAndUpdate(
-        { title: training, "assigned_users.email": req.user.email },
+        { title: training, "assigned_users.id": req.user._id },
         {
           $set: {
             "assigned_users.$": {
               display_name: req.user.first_name + " " + req.user.last_name,
-              email: req.user.email,
+              id: req.user._id,
               complete: true,
             },
           },

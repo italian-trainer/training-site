@@ -143,10 +143,10 @@ export async function assignTraining(req, res) {
   if (req.user.role == "employee") {
     return res.sendStatus(401); // Employees cannot read roster
   }
-  const { training, email } = req.body;
+  const { training, id } = req.body;
   try {
     const assigned_training = await Training.findOne({ title: training });
-    const assigned_user = await User.findOne({ email });
+    const assigned_user = await User.findById(id);
     if (assigned_training == null) {
       res.status(500).json({
         status: "error",
@@ -164,7 +164,7 @@ export async function assignTraining(req, res) {
       });
     }
     for (var i in assigned_training.assigned_users) {
-      if (assigned_training.assigned_users[i].get("email") == email) {
+      if (assigned_training.assigned_users[i].get("id") == id) {
         res.status(500).json({
           status: "error",
           code: 500,
@@ -176,7 +176,7 @@ export async function assignTraining(req, res) {
     }
     assigned_training.assigned_users.push({
       display_name: assigned_user.first_name + " " + assigned_user.last_name,
-      email: email,
+      id,
       complete: false,
     });
     if (assigned_user.assigned_trainings == null) {
@@ -210,19 +210,19 @@ export async function deassignTraining(req, res) {
   if (req.user.role == "employee") {
     return res.sendStatus(401); // Employees cannot read roster
   }
-  const { training, email } = req.body;
+  const { training, id } = req.body;
   try {
     const updatedTraining = await Training.findOneAndUpdate(
-      { title: training, "assigned_users.email": email },
+      { title: training, "assigned_users.id": id },
       {
         $pull: {
-          assigned_users: { email },
+          assigned_users: { id },
         },
       },
       { new: true }
     );
     const updatedUser = await User.findOneAndUpdate(
-      { email: email, "assigned_trainings.training": training },
+      { _id: id, "assigned_trainings.training": training },
       {
         $pull: {
           assigned_trainings: { training },

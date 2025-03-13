@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const AssignmentSchema = new mongoose.Schema({
   display_name: { type: String, unique: false, require: true },
-  email: { type: String, unique: false, require: true },
+  id: { type: mongoose.Types.ObjectId, ref: "users", required: true },
   complete: { type: Boolean, require: true, default: false },
 });
 
