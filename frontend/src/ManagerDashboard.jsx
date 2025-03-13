@@ -152,7 +152,7 @@ const ManagerDashboard = () => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
           body: JSON.stringify({
-            id: employeeID, //email
+            id: employeeID, //id
             training: selectedTraining, //selected training
           }),
         }
@@ -189,7 +189,7 @@ const ManagerDashboard = () => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
           body: JSON.stringify({
-            id: employeeID, //email
+            id: employeeID, //id
             training: selectedTraining, //selected training
           }),
         }
