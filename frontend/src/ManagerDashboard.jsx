@@ -135,7 +135,7 @@ const ManagerDashboard = () => {
   );
 
   //to assign trainings
-  const assignTraining = async (employeeEmail) => {
+  const assignTraining = async (employeeID) => {
     if (!selectedTraining) {
       alert("Please select a training before assigning.");
       return;
@@ -152,7 +152,7 @@ const ManagerDashboard = () => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
           body: JSON.stringify({
-            email: employeeEmail, //email
+            id: employeeID, //email
             training: selectedTraining, //selected training
           }),
         }
@@ -172,7 +172,7 @@ const ManagerDashboard = () => {
   };
 
   //to unassign trainings
-  const unassignTraining = async (employeeEmail) => {
+  const unassignTraining = async (employeeID) => {
     if (!selectedTraining) {
       alert("Please select a training before removing.");
       return;
@@ -189,7 +189,7 @@ const ManagerDashboard = () => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
           body: JSON.stringify({
-            email: employeeEmail, //email
+            id: employeeID, //email
             training: selectedTraining, //selected training
           }),
         }
@@ -325,7 +325,7 @@ const ManagerDashboard = () => {
                       </select>
                       <button
                         className="assign-training-btn"
-                        onClick={() => assignTraining(employee.email)}
+                        onClick={() => assignTraining(employee.user_id)}
                       >
                         Assign
                       </button>
@@ -346,7 +346,7 @@ const ManagerDashboard = () => {
                       </select>
                       <button
                         className="remove-training-btn"
-                        onClick={() => unassignTraining(employee.email)}
+                        onClick={() => unassignTraining(employee.user_id)}
                       >
                         Remove
                       </button>
