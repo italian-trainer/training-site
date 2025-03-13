@@ -48,6 +48,9 @@ function UserDropdown({ setReceiver }) {
   return (
     !loading && (
       <select name="receiver" onChange={(e) => setReceiver(e.target.value)}>
+        <option key="start_opt" value="start_opt">
+            Pick a receiver
+          </option>
         {employees.map((entry) => (
           <option key={entry._id} value={entry._id}>
             {entry.first_name + " " + entry.last_name}
